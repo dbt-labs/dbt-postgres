@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.deploy-to }}
-      url: ${{ vars.PYPI_URL }}
+      url: ${{ vars.PYPI_PROJECT_URL }}
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
 
@@ -39,7 +39,10 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Setup environment
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-environment
+
       - name: Publish to PyPI
-        uses: ./.github/actions/publish-pypi
+        uses: dbt-labs/dbt-adapters/.github/actions/publish-pypi.yml@main
         with:
-          python-version: "3.11"
+          deploy-to: ${{ inputs.deploy-to }}
