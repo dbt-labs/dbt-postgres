@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Code Quality
 
 on:
   push:
@@ -16,5 +16,5 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  unit:
-    uses: dbt-labs/dbt-adapters/.github/workflows/unit-tests.yml@main
+  code-quality:
+    uses: dbt-labs/dbt-adapters/.github/workflows/code-quality.yml@main
