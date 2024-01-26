@@ -17,4 +17,4 @@ concurrency:
 
 jobs:
   code-quality:
-    uses: dbt-labs/dbt-adapters/.github/workflows/code-quality.yml@main
+    uses: dbt-labs/dbt-adapters/.github/workflows/code-quality.yml@config/release

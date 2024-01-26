@@ -53,7 +53,7 @@ jobs:
         shell: bash
 
       - name: Publish results
-        uses: dbt-labs/dbt-adapters/.github/actions/publish-results.yml@main
+        uses: dbt-labs/dbt-adapters/.github/actions/publish-results.yml@config/release
         if: always()
         with:
           source-file: "results.csv"
