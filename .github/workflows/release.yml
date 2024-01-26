@@ -35,12 +35,12 @@ jobs:
           persist-credentials: false
 
       - name: Setup `hatch`
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch.yml@main
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
 
       - name: Build `dbt-postgres`
-        uses: dbt-labs/dbt-adapters/.github/actions/build-hatch.yml@main
+        uses: dbt-labs/dbt-adapters/.github/actions/build-hatch@main
 
       - name: Publish to PyPI
-        uses: dbt-labs/dbt-adapters/.github/actions/publish-pypi.yml@main
+        uses: dbt-labs/dbt-adapters/.github/actions/publish-pypi@main
         with:
           pypi-repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
