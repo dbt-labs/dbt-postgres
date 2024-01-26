@@ -19,7 +19,7 @@ defaults:
 
 # will cancel previous workflows triggered by the same event and for the same ref for PRs or same SHA otherwise
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name }}-${{ contains(github.event_name, 'pull_request') && github.event.pull_request.head.ref || github.sha }}
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ contains(github.event_name, 'pull_request') && github.event.pull_request.head.ref || github.sha }}-${{ inputs.deploy-to }}
   cancel-in-progress: true
 
 jobs:
@@ -39,10 +39,13 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup environment
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-environment
+      - name: Setup `hatch`
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch.yml@main
+
+      - name: Build `dbt-postgres`
+        uses: dbt-labs/dbt-adapters/.github/actions/build-hatch.yml@main
 
       - name: Publish to PyPI
         uses: dbt-labs/dbt-adapters/.github/actions/publish-pypi.yml@main
         with:
-          deploy-to: ${{ inputs.deploy-to }}
+          pypi-repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
