@@ -13,8 +13,10 @@ runs:
 #      run: sudo -u postgres psql -f ./scripts/setup_test_database.sql
 #      shell: bash
 
+    - name: Grant access to the file
+      run: sudo chown -R postgres:postgres ${{ github.action_path }}/setup_db.sh
+      shell: bash
+
     - name: Configure the database
-      run: |
-        sudo chown -R postgres:postgres ${{ github.action_path }}/setup_db.sh
-        sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
+      run: sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
       shell: bash
