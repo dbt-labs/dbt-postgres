@@ -12,6 +12,7 @@ runs:
     - name: Configure the database
       run: |
         pwd
-        sudo su - postgres "psql -f setup_test_database.sql"
+        sudo su - postgres "pwd"
+        sudo su - postgres "psql -f ./setup_test_database.sql"
       shell: bash
       working-directory: ./scripts
