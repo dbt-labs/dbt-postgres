@@ -6,10 +6,9 @@ runs:
   steps:
 
     - name: Start postgres service
-      run: sudo systemctl start postgresql.service && pg_isready
+      run: |
+        sudo systemctl start postgresql.service
+        pg_isready
+        ./setup_postgres_linux.sh
       shell: bash
-
-    - name: Configure database
-      shell: bash
-      run: ./setup_postgres_linux.sh
       working-directory: ./.github/scripts
