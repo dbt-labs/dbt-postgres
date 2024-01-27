@@ -10,6 +10,6 @@ runs:
       shell: bash
 
     - name: Configure the database
-      run: sudo su - postgres "psql -f ./setup_test_database.sql"
+      run: sudo -u postgres psql -f setup_test_database.sql
       shell: bash
       working-directory: ./scripts
