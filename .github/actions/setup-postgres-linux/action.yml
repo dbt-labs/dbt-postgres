@@ -10,6 +10,5 @@ runs:
       shell: bash
 
     - name: Start postgres service
-      run: sudo -u postgres bash ./setup_postgres_linux.sh
+      run: sudo -u postgres bash ./.github/scripts/setup_postgres_linux.sh
       shell: bash
-      working-directory: ./.github/scripts
