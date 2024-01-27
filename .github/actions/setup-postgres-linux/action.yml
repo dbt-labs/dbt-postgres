@@ -14,5 +14,5 @@ runs:
 #      shell: bash
 
     - name: Configure the database
-      run: sudo bash ${{ github.action_path }}/setup_db.sh
+      run: sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
       shell: bash
