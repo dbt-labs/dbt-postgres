@@ -16,8 +16,9 @@ jobs:
     defaults:
       run:
         working-directory: ./scripts
+        shell: bash
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
       - name: Run script
-        run: bash ./empty_script.sh
+        run: ./empty_script.sh
