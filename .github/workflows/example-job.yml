@@ -1,13 +1,7 @@
 name: Example Job
 
 on:
-  push:
-    branches:
-      - "main"
-      - "*.latest"
   pull_request:
-
-permissions: read-all
 
 # https://docs.github.com/en/actions/learn-github-actions/essential-features-of-github-actions
 jobs:
