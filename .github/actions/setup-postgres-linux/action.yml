@@ -10,5 +10,5 @@ runs:
       shell: bash
 
     - name: Configure the database
-      run: sudo su - postgres "psql -f ./scripts/setup_test_database.sql"
+      run: sudo su - postgres "pwd && psql -f ./scripts/setup_test_database.sql"
       shell: bash
