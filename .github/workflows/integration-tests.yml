@@ -41,16 +41,19 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          persist-credentials: true
 
       - name: Setup `hatch`
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@config/release
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Setup postgres
-        uses: ./.github/actions/setup-postgres-linux
+      - name: Run empty script
+        run: ./echo.sh
+        shell: bash
+        working-directory: ./scripts
+
+#      - name: Setup postgres
+#        uses: ./.github/actions/setup-postgres-linux
 
       - name: Run integration tests
         run: hatch run integration-tests:all
