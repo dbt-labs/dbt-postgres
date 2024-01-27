@@ -1,3 +1,4 @@
+# https://docs.github.com/en/actions/learn-github-actions/essential-features-of-github-actions
 name: Empty Workflow
 
 on:
@@ -10,14 +11,13 @@ on:
 permissions: read-all
 
 jobs:
-  integration:
-    name: Empty Workflow
+  example-job:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./scripts
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
-      - name: Run empty script
-        run: ./.github/scripts/empty_script.sh
-        shell: bash
+      - name: Run script
+        run: ./empty_script.sh
