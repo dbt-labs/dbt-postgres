@@ -15,12 +15,9 @@ for i in {1..10}; do
 	if pg_isready -h "${PGHOST}" -p "${PGPORT}" -U "${PGUSER}" ; then
 		break
 	fi
-
     echo "Waiting for postgres to be ready..."
     sleep 2;
 done;
-
-echo "Postgres is running"
 
 createdb dbt
 psql -c "CREATE ROLE root WITH PASSWORD 'password';"

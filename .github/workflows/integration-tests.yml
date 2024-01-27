@@ -49,16 +49,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Start the postgres service
-        run: |
-          sudo systemctl start postgresql.service
-          pg_isready
-        shell: bash
-
-      - name: Configure the database
-        run: sudo -u postgres bash setup_postgres_linux.sh
-        shell: bash
-        working-directory: ./.github/scripts
+      - name: Setup postgres
+        uses: ./.github/actions/setup-postgres-linux
 
       - name: Run integration tests
         run: hatch run integration-tests:all
