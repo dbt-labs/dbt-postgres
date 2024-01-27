@@ -1,14 +1,18 @@
 name: Set up postgres (linux)
-description: Set up and configure postgres database on linux for integration tests
+description: Set up and configure a postgres database on linux for integration tests
 
 runs:
   using: composite
   steps:
 
-    - name: Start postgres service
-      run: sudo systemctl start postgresql.service && pg_isready
+    - name: Start the postgres service
+      run: |
+        sudo systemctl start postgresql.service
+        pg_isready
       shell: bash
 
-    - name: Start postgres service
-      run: sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
+    - name: Configure the database
+      run: |
+        chmod +x ${{ github.action_path }}/setup_db.sh
+        sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
       shell: bash
