@@ -10,5 +10,5 @@ runs:
       shell: bash
 
     - name: Start postgres service
-      run: sudo -u postgres bash ./.github/scripts/setup_postgres_linux.sh
+      run: sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
       shell: bash
