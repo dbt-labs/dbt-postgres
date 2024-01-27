@@ -1,0 +1,23 @@
+name: Empty Workflow
+
+on:
+  push:
+    branches:
+      - "main"
+      - "*.latest"
+  pull_request:
+
+permissions: read-all
+
+jobs:
+  integration:
+    name: Empty Workflow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run empty script
+        run: ./.github/scripts/empty_script.sh
+        shell: bash

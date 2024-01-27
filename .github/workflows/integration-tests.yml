@@ -31,7 +31,6 @@ jobs:
   integration:
     name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
 
     strategy:
       fail-fast: false
@@ -42,14 +41,14 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Run empty script
+        run: ./.github/scripts/empty_script.sh
+        shell: bash
+
       - name: Setup `hatch`
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@config/release
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: Run empty script
-        run: ./.github/scripts/echo.sh
-        shell: bash
 
 #      - name: Setup postgres
 #        uses: ./.github/actions/setup-postgres-linux
