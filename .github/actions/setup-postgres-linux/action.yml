@@ -20,7 +20,7 @@ runs:
 
     - name: Configure the database
       shell: bash
-      run: sudo -u postgres psql -f setup_test_database.sql
+      run: sudo -u postgres psql -f ./setup_test_database.sql
       working-directory: ./scripts
 
 #    - name: Configure the database
