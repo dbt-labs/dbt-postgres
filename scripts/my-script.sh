@@ -1,1 +1,1 @@
-echo "This is an empty script"
+echo "my-script.sh: Postgres is ready!"

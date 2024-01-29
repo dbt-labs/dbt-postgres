@@ -10,4 +10,4 @@ runs:
       run: |
         sudo systemctl start postgresql.service
         pg_isready
-        sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
+        ./scripts/my-script.sh

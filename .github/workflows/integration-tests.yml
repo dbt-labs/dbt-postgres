@@ -11,10 +11,6 @@ on:
 permissions: read-all
 
 env:
-  DBT_INVOCATION_ENV: github-actions
-  DBT_TEST_USER_1: dbt_test_user_1
-  DBT_TEST_USER_2: dbt_test_user_2
-  DBT_TEST_USER_3: dbt_test_user_3
   POSTGRES_TEST_HOST: localhost
   POSTGRES_TEST_PORT: 5432
   POSTGRES_TEST_USER: root
@@ -40,11 +36,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
 
       - name: Setup postgres
         uses: ./.github/actions/setup-postgres-linux
