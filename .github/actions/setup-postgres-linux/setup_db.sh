@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+echo "woohoo"
 env | grep '^PG'
 
 # If you want to run this script for your own postgresql (run with

@@ -7,8 +7,7 @@ runs:
 
     - name: Start the postgres service
       shell: bash
-      run: echo "woohoo"
-#        sudo systemctl start postgresql.service
-#        pg_isready
-#        sudo chmod a+x ${{ github.action_path }}/setup_db.sh
-#        sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
+      run: |
+        sudo systemctl start postgresql.service
+        pg_isready
+        sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
