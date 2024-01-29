@@ -14,3 +14,7 @@ runs:
     - name: Configure the database
       shell: bash
       run: sudo su - postgres psql -c 'CREATE DATABASE dbt;'
+      env:
+        PGUSER: postgres
+        PGPORT: 5432
+        PGHOST: localhost
