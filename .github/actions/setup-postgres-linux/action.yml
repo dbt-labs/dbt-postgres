@@ -14,5 +14,5 @@ runs:
     - name: Configure the database
       shell: bash
       run: |
-        sudo chmod +x ./scripts/my-script.sh
-        sudo -u postgres bash ./scripts/my-script.sh
+        sudo chmod +x ./scripts/setup_test_database.sql
+        sudo -u postgres psql -f ./scripts/setup_test_database.sql
