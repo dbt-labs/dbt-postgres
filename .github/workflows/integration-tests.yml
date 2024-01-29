@@ -41,7 +41,7 @@ jobs:
         uses: ./.github/actions/setup-postgres-linux
 
       - name: Setup `hatch`
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@config/release
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -49,7 +49,7 @@ jobs:
         run: hatch run integration-tests:all
 
       - name: Publish results
-        uses: dbt-labs/dbt-adapters/.github/actions/publish-results@config/release
+        uses: dbt-labs/dbt-adapters/.github/actions/publish-results@main
         if: always()
         with:
           source-file: "results.csv"
