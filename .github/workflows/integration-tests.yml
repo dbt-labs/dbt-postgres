@@ -37,9 +37,17 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Run script
+      - name: Can I `cd ./scripts`?
         shell: bash
-        run: ./scripts/my-script.sh
+        run: |
+          sudo chmod +x ./scripts/my-script.sh
+          ./scripts/my-script.sh
+
+      - name: Can I run .scripts/my-script.sh?
+        shell: bash
+        run: |
+          sudo chmod +x ./scripts/my-script.sh
+          ./scripts/my-script.sh
 #      - name: Setup postgres
 #        uses: ./.github/actions/setup-postgres-linux
 
