@@ -10,4 +10,5 @@ runs:
       run: |
         sudo systemctl start postgresql.service
         pg_isready
+        sudo chmod +x ${{ github.action_path }}/setup_db.sh
         sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
