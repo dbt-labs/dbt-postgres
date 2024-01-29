@@ -15,4 +15,4 @@ runs:
       shell: bash
       run: |
         sudo chmod +x ./scripts/my-script.sh
-        ./scripts/my-script.sh
+        sudo -u postgres bash ./scripts/my-script.sh
