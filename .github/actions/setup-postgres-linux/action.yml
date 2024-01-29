@@ -14,10 +14,10 @@ runs:
     - name: Configure the database
       shell: bash
       run: |
-        sudo su - postgres bash PGUSER=postgres
+        sudo su - postgres bash PGUSER="postgres"
         sudo su - postgres bash export PGUSER
-        sudo su - postgres bash PGPORT=5432
+        sudo su - postgres bash PGPORT="5432"
         sudo su - postgres bash export PGPORT
-        sudo su - postgres bash PGHOST=localhost
+        sudo su - postgres bash PGHOST="localhost"
         sudo su - postgres bash export PGHOST
         sudo su - postgres bash createdb dbt
