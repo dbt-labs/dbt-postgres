@@ -13,4 +13,4 @@ runs:
 
     - name: Configure the database
       shell: bash
-      run: sudo su - postgres psql -c 'select 1;'
+      run: sudo su - postgres psql -c "select 1;"
