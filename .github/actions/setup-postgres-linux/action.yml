@@ -7,22 +7,7 @@ runs:
 
     - name: Start the postgres service
       shell: bash
-      run: sudo systemctl start postgresql.service
-
-    - name: Grant access to the directory
-      shell: bash
-      run: sudo chown -R 777 ./scripts
-
-    - name: Grant access to the file
-      shell: bash
-      run: sudo chown -R postgres:postgres setup_test_database.sql
-      working-directory: ./scripts
-
-    - name: Configure the database
-      shell: bash
-      run: sudo -u postgres psql -f ./setup_test_database.sql
-      working-directory: ./scripts
-
-#    - name: Configure the database
-#      shell: bash
-#      run: sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
+      run: |
+        sudo systemctl start postgresql.service
+        pg_isready
+        sudo -u postgres bash ${{ github.action_path }}/setup_db.sh
