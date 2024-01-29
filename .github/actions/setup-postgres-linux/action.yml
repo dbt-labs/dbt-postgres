@@ -10,4 +10,9 @@ runs:
       run: |
         sudo systemctl start postgresql.service
         pg_isready
+
+    - name: Configure the database
+      shell: bash
+      run: |
+        sudo chmod +x ./scripts/my-script.sh
         ./scripts/my-script.sh
