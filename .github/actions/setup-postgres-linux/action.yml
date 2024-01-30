@@ -11,6 +11,13 @@ runs:
         sudo systemctl start postgresql.service
         pg_isready
 
+    - name: Can I cd "/home/runner/work/dbt-postgres/dbt-postgres"?
+      shell: bash
+      run: |
+        sudo -u postgres bash -c "pwd"
+        sudo -u postgres bash -c "ls"
+        sudo -u postgres bash -c "cd ."
+
     - name: Configure the database
       shell: bash
       run: sudo -u postgres psql -c "CREATE DATABASE dbt;"
