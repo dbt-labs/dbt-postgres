@@ -9,7 +9,7 @@ runs:
       shell: bash
       run: |
         sudo systemctl start postgresql.service
-        pg_isready
+        pg_isready -h localhost -p 5432 -u postgres
 
     - name: Can I cd "/home/runner/work/dbt-postgres/dbt-postgres"?
       shell: bash
@@ -17,6 +17,7 @@ runs:
         sudo -u postgres bash -c "pwd"
         sudo -u postgres bash -c "ls"
         sudo -u postgres bash -c "cd ."
+        sudo -u postgres bash -c "pwd"
 
     - name: Configure the database
       shell: bash
