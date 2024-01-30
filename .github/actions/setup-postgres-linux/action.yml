@@ -13,4 +13,4 @@ runs:
 
     - name: Configure the database
       shell: bash
-      run: sudo -u psql -c "CREATE DATABASE dbt;"
+      run: sudo -u postgres psql -c "CREATE DATABASE dbt;"
