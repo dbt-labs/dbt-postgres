@@ -37,7 +37,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_PASSWORD: password
+          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -52,7 +52,7 @@ jobs:
 
       - name: Setup postgres
         shell: bash
-        run: psql -d postgres -U root -a -f ./scripts/setup_test_database.sql
+        run: psql -d postgres -U postgres -a -f ./scripts/setup_test_database.sql
 
       - name: Setup `hatch`
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
