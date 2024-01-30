@@ -57,7 +57,9 @@ jobs:
 
       - name: Setup postgres
         shell: bash
-        run: psql -d postgres -U postgres -a -f ./scripts/setup_test_database.sql
+        run: |
+          apt update && apt-get install postgresql
+          psql -d postgres -U postgres -a -f ./scripts/setup_test_database.sql
         env:
           PGPASSWORD: postgres
 
