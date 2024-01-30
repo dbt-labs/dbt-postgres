@@ -52,7 +52,7 @@ jobs:
 
       - name: Look for postgres
         shell: bash
-        run: pg_isready -h localhost -p 5432 -U postgres
+        run: pg_isready -h localhost -p 5432 -d postgres -U postgres
 
       - name: Setup postgres
         shell: bash
