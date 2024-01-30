@@ -50,15 +50,15 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Look for postgres
-        shell: bash
-        run: pg_isready -h localhost -p 5432 -d postgres -U postgres
-
       - name: Setup postgres
         shell: bash
-        run: psql -h localhost -p 5432 -d postgres -U postgres -c "select 1"
+        run: psql -f ./scripts/setup_test_database.sql
         env:
+          PGHOST: localhost
+          PGPORT: 5432
+          PGUSER: postgres
           PGPASSWORD: postgres
+          PGDATABASE: postgres
 
       - name: Setup `hatch`
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
