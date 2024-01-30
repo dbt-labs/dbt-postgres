@@ -56,7 +56,7 @@ jobs:
 
       - name: Setup postgres
         shell: bash
-        run: psql -d postgres -U postgres -c "select 1"
+        run: psql -h localhost -p 5432 -d postgres -U postgres -c "select 1"
         env:
           PGPASSWORD: postgres
 
