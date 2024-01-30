@@ -33,12 +33,26 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
 
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup postgres
-        uses: ./.github/actions/setup-postgres-linux
+        shell: bash
+        run: psql -d postgres -U root -a -f ./scripts/setup_test_database.sql
 
       - name: Setup `hatch`
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
