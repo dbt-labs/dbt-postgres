@@ -50,6 +50,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Look for postgres
+        shell: bash
+        run: pg_isready -h localhost -p 5432 -U postgres
+
       - name: Setup postgres
         shell: bash
         run: psql -d postgres -U postgres -c "select 1"
