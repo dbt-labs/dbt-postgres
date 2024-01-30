@@ -10,14 +10,6 @@ on:
 
 permissions: read-all
 
-env:
-  POSTGRES_TEST_HOST: localhost
-  POSTGRES_TEST_PORT: 5432
-  POSTGRES_TEST_USER: root
-  POSTGRES_TEST_PASS: password
-  POSTGRES_TEST_DATABASE: dbt
-  POSTGRES_TEST_THREADS: 4
-
 # will cancel previous workflows triggered by the same event and for the same ref for PRs or same SHA otherwise
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ contains(github.event_name, 'pull_request') && github.event.pull_request.head.ref || github.sha }}
@@ -67,6 +59,13 @@ jobs:
 
       - name: Run integration tests
         run: hatch run integration-tests:all
+        env:
+          POSTGRES_TEST_HOST: localhost
+          POSTGRES_TEST_PORT: 5432
+          POSTGRES_TEST_USER: root
+          POSTGRES_TEST_PASS: password
+          POSTGRES_TEST_DATABASE: dbt
+          POSTGRES_TEST_THREADS: 4
 
       - name: Publish results
         uses: dbt-labs/dbt-adapters/.github/actions/publish-results@main
