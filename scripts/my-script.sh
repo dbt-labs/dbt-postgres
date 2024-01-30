@@ -1,1 +1,0 @@
-echo "my-script.sh: Postgres is ready!"
