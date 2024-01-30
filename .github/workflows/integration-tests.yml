@@ -50,14 +50,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Setup postgres
-        shell: bash
-        run: psql -d postgres -U postgres -a -f ./scripts/setup_test_database.sql
-
       - name: Setup `hatch`
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Setup postgres
+        shell: bash
+        run: psql -d postgres -U postgres -a -f ./scripts/setup_test_database.sql
+        env:
+          PGPASSWORD: postgres
 
       - name: Run integration tests
         run: hatch run integration-tests:all
