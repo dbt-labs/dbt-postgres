@@ -74,7 +74,7 @@ Rather than forking `dbt-labs/dbt-postgres`, use `dbt-labs/dbt-postgres` directl
 [Setting up an environment](https://github.com/dbt-labs/dbt-core/blob/HEAD/CONTRIBUTING.md#setting-up-an-environment)
 3. Install `dbt-postgres` and development dependencies in the virtual environment
    ```shell
-   pip install -e "".[dev]""
+   pip install -e .[dev]
    ```
 
 When `dbt-postgres` is installed this way, any changes made to the `dbt-postgres` source code
@@ -86,7 +86,6 @@ will be reflected in the virtual environment immediately.
 `dbt-postgres` contains [unit](https://github.com/dbt-labs/dbt-postgres/tree/main/tests/unit)
 and [functional](https://github.com/dbt-labs/dbt-postgres/tree/main/tests/functional) tests.
 
-To install test dependencies run: `pip install -e ".[test]"`
 
 ### Unit tests
 
