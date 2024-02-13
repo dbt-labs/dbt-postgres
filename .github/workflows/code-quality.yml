@@ -7,12 +7,13 @@ on:
       - "*.latest"
   pull_request:
   workflow_dispatch:
-    dbt_adapters_branch:
-      inputs:
-        description: "The branch of dbt-adapters to evaluate"
-        type: string
-        required: true
-        default: "main"
+    inputs:
+      dbt_adapters_branch:
+        inputs:
+          description: "The branch of dbt-adapters to evaluate"
+          type: string
+          required: true
+          default: "main"
   workflow_call:
     inputs:
       dbt_adapters_branch:
