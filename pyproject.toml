@@ -95,6 +95,12 @@ features = [
     "build",
 ]
 
+[tool.hatch.envs.default.overrides]
+dependencies = [
+    { value = "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@$(HATCH_DBT_ADAPTERS_BRANCH)", env = ["HATCH_DBT_ADAPTERS_BRANCH"] },
+    { value = "dbt_common @ git+https://github.com/dbt-labs/dbt-common.git@$(HATCH_DBT_COMMON_BRANCH)", env = ["HATCH_DBT_COMMON_BRANCH"] },
+]
+
 [tool.hatch.envs.lint]
 detached = true
 features = ["lint"]
