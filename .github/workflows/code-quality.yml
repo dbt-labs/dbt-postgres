@@ -7,6 +7,19 @@ on:
       - "*.latest"
   pull_request:
   workflow_dispatch:
+    dbt_adapters_branch:
+      inputs:
+        description: "The branch of dbt-adapters to evaluate"
+        type: string
+        required: true
+        default: "main"
+  workflow_call:
+    inputs:
+      dbt_adapters_branch:
+        description: "The branch of dbt-adapters to evaluate"
+        type: string
+        required: true
+        default: "main"
 
 permissions: read-all
 
@@ -25,6 +38,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+
+      - name: Update Adapters and Core branches
+        if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch'}}
+        shell: bash
+        run: |
+          ./.github/scripts/update_dev_packages.sh \
+            "main" \
+            ${{ github.event.inputs.dbt_adapters_branch }}
 
       - name: Setup `hatch`
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
