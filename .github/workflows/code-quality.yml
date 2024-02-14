@@ -45,11 +45,11 @@ jobs:
         shell: bash
         run: |
           ./.github/scripts/update_dev_packages.sh \
-            "main" \
-            ${{ github.event.inputs.dbt_adapters_branch }}
+            ${{ github.event.inputs.dbt_adapters_branch }} \
+            "main"
 
       - name: Setup `hatch`
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@${{ inputs.dbt_adapters_branch }}
 
       - name: Run linters
         run: hatch run lint:all

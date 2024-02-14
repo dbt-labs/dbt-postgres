@@ -11,24 +11,24 @@ on:
       dbt_adapters_branch:
         description: "The branch of dbt-adapters to use"
         type: string
-        required: true
+        required: false
         default: "main"
       core_branch:
         description: "The branch of dbt-core to use"
         type: string
-        required: true
+        required: false
         default: "main"
   workflow_call:
     inputs:
       dbt_adapters_branch:
         description: "The branch of dbt-adapters to use"
         type: string
-        required: true
+        required: false
         default: "main"
       core_branch:
         description: "The branch of dbt-core to use"
         type: string
-        required: true
+        required: false
         default: "main"
 
 
@@ -71,8 +71,8 @@ jobs:
         shell: bash
         run: |
           ./.github/scripts/update_dev_packages.sh \
-            ${{ github.event.inputs.core_branch }} \
-            ${{ github.event.inputs.dbt_adapters_branch }}
+            ${{ github.event.inputs.dbt_adapters_branch }} \
+            ${{ github.event.inputs.core_branch }}
 
       - name: Setup postgres
         shell: bash
