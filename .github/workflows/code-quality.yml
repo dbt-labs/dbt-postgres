@@ -9,7 +9,6 @@ on:
   workflow_dispatch:
     inputs:
       dbt_adapters_branch:
-        inputs:
           description: "The branch of dbt-adapters to evaluate"
           type: string
           required: true
