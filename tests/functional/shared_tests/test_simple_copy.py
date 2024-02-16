@@ -1,5 +1,5 @@
-from dbt.tests.adapter.simple_copy.test_simple_copy import BaseSimpleCopyUppercase
-from dbt.tests.adapter.simple_copy.test_copy_uppercase import (
+from dbt.tests.adapter.simple_copy.test_copy_uppercase import BaseSimpleCopyUppercase
+from dbt.tests.adapter.simple_copy.test_simple_copy import (
     SimpleCopyBase,
     EmptyModelsArentRunBase,
 )
