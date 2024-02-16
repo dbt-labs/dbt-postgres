@@ -34,9 +34,7 @@ class TestHooksRefsOnSeeds(BaseHooksRefsOnSeeds):
     pass
 
 
-class TestPrePostModelHooksOnSeedsPlusPrefixed(
-    BasePrePostModelHooksOnSeedsPlusPrefixed
-):
+class TestPrePostModelHooksOnSeedsPlusPrefixed(BasePrePostModelHooksOnSeedsPlusPrefixed):
     pass
 
 
