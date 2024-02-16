@@ -52,7 +52,7 @@ jobs:
             "main"
 
       - name: Setup `hatch`
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@$DBT_ADAPTERS_BRANCH
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@${{ env.DBT_ADAPTERS_BRANCH }}
 
       - name: Run linters
         run: hatch run lint:all
