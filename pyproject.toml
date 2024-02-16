@@ -130,7 +130,7 @@ target-version = ['py38']
 [tool.flake8]
 select = ["E", "W", "F"]
 ignore = ["E203", "E501", "E741", "W503", "W504"]
-exclude = ["tests", "venv", ".hatch_envs"]
+exclude = ["tests", "venv", ".hatch_venvs"]
 per-file-ignores = ["*/__init__.py: F401"]
 
 [tool.mypy]
@@ -146,7 +146,7 @@ files = [
 exclude = [
     "tests/functional",
     "venv",
-    ".hatch_envs",
+    ".hatch_venvs",
 ]
 
 [tool.pytest]
