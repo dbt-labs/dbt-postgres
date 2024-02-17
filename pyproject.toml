@@ -97,6 +97,10 @@ template = "unit-tests"
 extra-dependencies = [
     "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git@setup-shared-tests#subdirectory=dbt-tests-adapter",
 ]
+[tool.hatch.envs.integration-tests.env-vars]
+DBT_TEST_USER_1 = "dbt_test_role_1"
+DBT_TEST_USER_2 = "dbt_test_role_2"
+DBT_TEST_USER_3 = "dbt_test_role_3"
 [tool.hatch.envs.integration-tests.scripts]
 all = "python -m pytest {args:tests/functional}"
 
