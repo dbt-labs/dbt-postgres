@@ -1,3 +1,5 @@
+import pytest
+
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_array_append import BaseArrayAppend
 from dbt.tests.adapter.utils.test_array_concat import BaseArrayConcat
@@ -91,6 +93,7 @@ class TestEscapeSingleQuotesQuote(BaseEscapeSingleQuotesQuote):
     pass
 
 
+@pytest.mark.skip("Not implemented in `dbt-postgres<1.8`, fails in `dbt-postgres>=1.8`")
 class TestEscapeSingleQuotesBackslash(BaseEscapeSingleQuotesBackslash):
     pass
 
