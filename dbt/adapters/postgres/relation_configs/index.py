@@ -1,15 +1,16 @@
 from dataclasses import dataclass, field
-from typing import Set, FrozenSet
+from typing import FrozenSet, Set
 
 import agate
 from dbt_common.dataclass_schema import StrEnum
 from dbt_common.exceptions import DbtRuntimeError
+
 from dbt.adapters.relation_configs import (
     RelationConfigBase,
+    RelationConfigChange,
+    RelationConfigChangeAction,
     RelationConfigValidationMixin,
     RelationConfigValidationRule,
-    RelationConfigChangeAction,
-    RelationConfigChange,
 )
 
 
@@ -76,7 +77,7 @@ class PostgresIndexConfig(RelationConfigBase, RelationConfigValidationMixin):
     @classmethod
     def parse_model_node(cls, model_node_entry: dict) -> dict:
         config_dict = {
-            "column_names": set(model_node_entry.get("columns", set())),
+            "column_names": set(zip(*zip(model_node_entry.get("columns", set())))),
             "unique": model_node_entry.get("unique"),
             "method": model_node_entry.get("type"),
         }
