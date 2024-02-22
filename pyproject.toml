@@ -103,7 +103,7 @@ extra-dependencies = [
     "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
     "dbt-core @ git+https://github.com/dbt-labs/dbt-core.git#subdirectory=core",
-    "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git#subdirectory=dbt-tests-adapter",
+    "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git@fix-testing-migration#subdirectory=dbt-tests-adapter",
 ]
 [tool.hatch.envs.integration-tests.env-vars]
 DBT_TEST_USER_1 = "dbt_test_user_1"
