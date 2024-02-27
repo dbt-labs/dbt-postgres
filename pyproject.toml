@@ -51,7 +51,7 @@ path = "dbt/adapters/postgres/__version__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@ADAP-108/fix_renamed_relations_for_1.8",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
 ]
 
@@ -89,7 +89,7 @@ dependencies = [
 ]
 extra-dependencies = [
     # TODO: remove `dbt-core` dependencies from unit tests
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@ADAP-108/fix_renamed_relations_for_1.8",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
     "dbt-core @ git+https://github.com/dbt-labs/dbt-core.git#subdirectory=core",
 ]
@@ -100,7 +100,7 @@ all = "python -m pytest {args:tests/unit}"
 template = "unit-tests"
 extra-dependencies = [
     # TODO: remove `dbt-core` dependencies from integration tests
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@ddc5d9de4c20211fefbe150b26711273edec8323",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@ADAP-108/fix_renamed_relations_for_1.8",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
     "dbt-core @ git+https://github.com/dbt-labs/dbt-core.git#subdirectory=core",
     "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git#subdirectory=dbt-tests-adapter",

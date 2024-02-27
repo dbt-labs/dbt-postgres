@@ -1,9 +1,9 @@
-from dbt.adapters.redshift.relation import RedshiftRelation
+from dbt.adapters.postgres.relation import PostgresRelation
 from dbt.adapters.contracts.relation import RelationType
 
 
 def test_renameable_relation():
-    relation = RedshiftRelation.create(
+    relation = PostgresRelation.create(
         database="my_db",
         schema="my_schema",
         identifier="my_table",
