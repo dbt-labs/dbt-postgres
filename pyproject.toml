@@ -23,10 +23,10 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 dependencies = [
-    "dbt-adapters<2.0.0a1",
+    "dbt-adapters>=0.1.0a1,<2.0",
     "psycopg2>=2.9,<3.0",
     # installed via dbt-adapters but used directly
-    "dbt-common<2.0.0a1",
+    "dbt-common>=0.1.0a1,<2.0",
     "agate>=1.0,<2.0",
 ]
 [project.urls]
