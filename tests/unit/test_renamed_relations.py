@@ -11,5 +11,6 @@ def test_renameable_relation():
     )
     assert relation.renameable_relations == frozenset({
         RelationType.View,
-        RelationType.Table
+        RelationType.Table,
+        RelationType.MaterializedView,
     })
