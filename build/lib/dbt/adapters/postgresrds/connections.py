@@ -141,6 +141,15 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
         def connect():
 
             print(f"Using the following role arn {credentials.role_arn}")
+            sts_client = boto3.client("sts")
+
+            assumed_role_object = sts_client.assume_role(
+                RoleArn=credentials.role_arn, RoleSessionName="AssumeRoleSession1"
+            )
+
+            token = assumed_role_object["Credentials"]
+
+            print(f"TOKEN !!! {token}")
 
             handle = psycopg2.connect(
                 dbname=credentials.database,
