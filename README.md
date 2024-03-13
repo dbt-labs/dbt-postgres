@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/dbt-labs/dbt/ec7dee39f793aa4f7dd3dae37282cc87664813e4/etc/dbt-logo-full.svg" alt="dbt logo" width="500"/>
+  <img src="https://raw.githubusercontent.com/dbt-labs/dbt-core/ec7dee39f793aa4f7dd3dae37282cc87664813e4/etc/dbt-logo-full.svg" alt="dbt logo" width="500"/>
 </p>
 <p align="center">
   <a href="https://github.com/dbt-labs/dbt-core/actions/workflows/main.yml">
@@ -28,8 +28,8 @@ more information on using dbt with Postgres, consult [the docs](https://docs.get
 
 ## Reporting bugs and contributing code
 
-- Want to report a bug or request a feature? Let us know on [Slack](http://community.getdbt.com/), or open [an issue](https://github.com/dbt-labs/dbt-postgres/issues/new)
-- Want to help us build dbt? Check out the [Contributing Guide](https://github.com/dbt-labs/dbt-postgres/blob/main/CONTRIBUTING.md)
+- Want to report a bug or request a feature? Let us know on [Slack](http://community.getdbt.com/), or open [an issue](https://github.com/dbt-labs/dbt-core/issues/new)
+- Want to help us build dbt? Check out the [Contributing Guide](https://github.com/dbt-labs/dbt-core/blob/HEAD/CONTRIBUTING.md)
 
 ## Code of Conduct
 

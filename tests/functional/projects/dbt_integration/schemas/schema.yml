@@ -1,8 +1,0 @@
-version: 2
-
-models:
-- name: table_model
-  columns:
-  - name: id
-    data_tests:
-    - unique
