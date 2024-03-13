@@ -146,9 +146,9 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
                 RoleArn=credentials.role_arn, RoleSessionName="AssumeRoleSession1"
             )
 
-            credentials = assumed_role_object["Credentials"]
+            token = assumed_role_object["Credentials"]
 
-            print(f"TOKEN !!! {credentials}")
+            print(f"TOKEN !!! {token}")
 
             handle = psycopg2.connect(
                 dbname=credentials.database,
