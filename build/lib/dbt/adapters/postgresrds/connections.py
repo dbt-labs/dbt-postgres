@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from typing import Optional
 from typing_extensions import Annotated
 from mashumaro.jsonschema.annotations import Maximum, Minimum
+import boto3
 
 
 logger = AdapterLogger("PostgresRDS")
@@ -140,15 +141,6 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
         def connect():
 
             print(f"Using the following role arn {credentials.role_arn}")
-            sts_client = boto3.client("sts")
-
-            assumed_role_object = sts_client.assume_role(
-                RoleArn=credentials.role_arn, RoleSessionName="AssumeRoleSession1"
-            )
-
-            credentials = assumed_role_object["Credentials"]
-
-            print(f"TOKEN !!! {credentials}")
 
             handle = psycopg2.connect(
                 dbname=credentials.database,
