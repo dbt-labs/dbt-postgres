@@ -15,7 +15,7 @@ from typing import Optional
 from typing_extensions import Annotated
 from mashumaro.jsonschema.annotations import Maximum, Minimum
 import boto3
-
+import os
 
 logger = AdapterLogger("PostgresRDS")
 
@@ -28,7 +28,7 @@ class PostgresRDSCredentials(Credentials):
     port: Annotated[Port, Minimum(0), Maximum(65535)]
     password: str  # on postgres the password is mandatory
     role_arn: str
-    # aws_region: str
+    web_identity_token_path: str
     connect_timeout: int = 10
     role: Optional[str] = None
     search_path: Optional[str] = None
@@ -68,7 +68,7 @@ class PostgresRDSCredentials(Credentials):
             "application_name",
             "retries",
             "role_arn",
-            # "aws_region",
+            "web_identity_token_path",
         )
 
 
@@ -103,6 +103,13 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
 
             raise dbt.exceptions.DbtRuntimeError(e) from e
 
+    def get_iam_token(path_of_token):
+        with open(path_of_token, "r") as file:
+            f_data = file.readlines()
+        if len(f_data) == 0:
+            raise dbt.exceptions.DbtRuntimeError("No token found")
+        return f_data[0]
+
     @classmethod
     def open(cls, connection):
         if connection.state == "open":
@@ -121,7 +128,9 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
         search_path = credentials.search_path
         if search_path is not None and search_path != "":
             # see https://postgresql.org/docs/9.5/libpq-connect.html
-            kwargs["options"] = "-c search_path={}".format(search_path.replace(" ", "\\ "))
+            kwargs["options"] = "-c search_path={}".format(
+                search_path.replace(" ", "\\ ")
+            )
 
         if credentials.sslmode:
             kwargs["sslmode"] = credentials.sslmode
@@ -143,11 +152,13 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
             print(f"Using the following role arn {credentials.role_arn}")
             sts_client = boto3.client("sts")
 
-            assumed_role_object = sts_client.assume_role(
-                RoleArn=credentials.role_arn, RoleSessionName="AssumeRoleSession1"
+            assumed_role_object = sts_client.assume_role_with_web_identity(
+                RoleArn=credentials.role_arn,
+                RoleSessionName="AssumeRoleSession1",
+                WebIdentityToken=cls.get_iam_token(credentials.web_identity_token_path),
             )
 
-            token = assumed_role_object["Credentials"]
+            token = assumed_role_object.get("Credentials").get("SessionToken")
 
             print(f"TOKEN !!! {token}")
 
@@ -215,7 +226,9 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
         message = str(cursor.statusmessage)
         rows = cursor.rowcount
         status_message_parts = message.split() if message is not None else []
-        status_messsage_strings = [part for part in status_message_parts if not part.isdigit()]
+        status_messsage_strings = [
+            part for part in status_message_parts if not part.isdigit()
+        ]
         code = " ".join(status_messsage_strings)
         return AdapterResponse(_message=message, code=code, rows_affected=rows)
 
