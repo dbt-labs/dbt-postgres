@@ -16,10 +16,6 @@ Classifier: Programming Language :: Python :: 3.10
 Classifier: Programming Language :: Python :: 3.11
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
-Requires-Dist: dbt-core==1.7.9
-Requires-Dist: psycopg2-binary~=2.8
-Requires-Dist: agate
-Requires-Dist: boto3
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/dbt-labs/dbt-core/ec7dee39f793aa4f7dd3dae37282cc87664813e4/etc/dbt-logo-full.svg" alt="dbt logo" width="500"/>
