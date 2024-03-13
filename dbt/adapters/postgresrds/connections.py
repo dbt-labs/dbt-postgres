@@ -148,8 +148,6 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
             kwargs["application_name"] = credentials.application_name
 
         def connect():
-
-            print(f"Using the following role arn {credentials.role_arn}")
             sts_client = boto3.client("sts")
 
             assumed_role_object = sts_client.assume_role_with_web_identity(
