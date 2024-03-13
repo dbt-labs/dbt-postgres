@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from typing import Optional
 from typing_extensions import Annotated
 from mashumaro.jsonschema.annotations import Maximum, Minimum
+import boto3
 
 
 logger = AdapterLogger("PostgresRDS")
