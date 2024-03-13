@@ -25,7 +25,6 @@ class PostgresRDSCredentials(Credentials):
     user: str
     # Annotated is used by mashumaro for jsonschema generation
     port: Annotated[Port, Minimum(0), Maximum(65535)]
-    password: str  # on postgres the password is mandatory
     role_arn: str
     aws_region: str
     web_identity_token_path: str
