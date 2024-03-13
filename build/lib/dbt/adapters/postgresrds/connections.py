@@ -28,6 +28,7 @@ class PostgresRDSCredentials(Credentials):
     port: Annotated[Port, Minimum(0), Maximum(65535)]
     password: str  # on postgres the password is mandatory
     role_arn: str
+    aws_region: str
     web_identity_token_path: str
     connect_timeout: int = 10
     role: Optional[str] = None
