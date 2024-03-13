@@ -69,6 +69,7 @@ class PostgresRDSCredentials(Credentials):
             "retries",
             "role_arn",
             "web_identity_token_path",
+            "aws_region",
         )
 
 
@@ -103,8 +104,8 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
 
             raise dbt.exceptions.DbtRuntimeError(e) from e
 
-    def get_iam_token(path_of_token):
-        with open(path_of_token, "r") as file:
+    def get_web_identity_token(aws_token_path):
+        with open(aws_token_path, "r") as file:
             f_data = file.readlines()
         if len(f_data) == 0:
             raise dbt.exceptions.DbtRuntimeError("No token found")
@@ -155,10 +156,26 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
             assumed_role_object = sts_client.assume_role_with_web_identity(
                 RoleArn=credentials.role_arn,
                 RoleSessionName="AssumeRoleSession1",
-                WebIdentityToken=cls.get_iam_token(credentials.web_identity_token_path),
+                WebIdentityToken=cls.get_web_identity_token(
+                    credentials.web_identity_token_path
+                ),
             )
 
-            token = assumed_role_object.get("Credentials").get("SessionToken")
+            aws_credentials = assumed_role_object.get("Credentials")
+
+            boto_session = boto3.Session(
+                aws_access_key_id=aws_credentials.get("AccessKeyId"),
+                aws_secret_access_key=aws_credentials.get("SecretAccessKey"),
+                aws_session_token=aws_credentials.get("SessionToken"),
+                region_name=credentials.aws_region,
+            )
+            client = boto_session.client("rds")
+            token = client.generate_db_auth_token(
+                DBHostname=credentials.host,
+                Port=credentials.port,
+                DBUsername=credentials.user,
+                Region=credentials.aws_region,
+            )
 
             print(f"TOKEN !!! {token}")
 
