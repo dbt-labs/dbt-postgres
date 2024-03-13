@@ -15,7 +15,6 @@ from typing import Optional
 from typing_extensions import Annotated
 from mashumaro.jsonschema.annotations import Maximum, Minimum
 import boto3
-import os
 
 logger = AdapterLogger("PostgresRDS")
 
@@ -178,13 +177,11 @@ class PostgresRDSConnectionManager(SQLConnectionManager):
                 Region=credentials.aws_region,
             )
 
-            print(f"TOKEN !!! {token}")
-
             handle = psycopg2.connect(
                 dbname=credentials.database,
                 user=credentials.user,
                 host=credentials.host,
-                password=credentials.password,
+                password=token,
                 port=credentials.port,
                 connect_timeout=credentials.connect_timeout,
                 **kwargs,
