@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: dbt-postgres
-Version: 1.7.9
+Version: 1.7.10
 Summary: The postgres adapter plugin for dbt (data build tool)
 Home-page: https://github.com/dbt-labs/dbt-core
 Author: dbt Labs

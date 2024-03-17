@@ -1,4 +1,4 @@
-dbt-core==1.7.9
+dbt-core==1.7.10
 psycopg2-binary~=2.8
 agate
 boto3
