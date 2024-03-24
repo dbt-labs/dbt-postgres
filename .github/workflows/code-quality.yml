@@ -12,14 +12,14 @@ on:
           description: "The branch of dbt-adapters to evaluate"
           type: string
           required: true
-          default: "dbeatty/unknown-data-type-code-8912"
+          default: "main"
   workflow_call:
     inputs:
       dbt_adapters_branch:
         description: "The branch of dbt-adapters to evaluate"
         type: string
         required: true
-        default: "dbeatty/unknown-data-type-code-8912"
+        default: "main"
 
 permissions: read-all
 
