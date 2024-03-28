@@ -24,11 +24,13 @@ classifiers = [
 ]
 dependencies = [
     "dbt-adapters>=0.1.0a1,<2.0",
-    "psycopg2>=2.9,<3.0",
+    "psycopg2-binary>=2.9,<3.0",
     # installed via dbt-adapters but used directly
     "dbt-common>=0.1.0a1,<2.0",
     "agate>=1.0,<2.0",
 ]
+[project.optional-dependencies]
+no-binary = ["psycopg2>=2.9,<3.0"]
 [project.urls]
 Homepage = "https://github.com/dbt-labs/dbt-postgres"
 Documentation = "https://docs.getdbt.com"
@@ -119,6 +121,8 @@ dependencies = [
     "twine",
     "check-wheel-contents",
 ]
+
+
 [tool.hatch.envs.build.scripts]
 check-all = [
     "- check-wheel",
