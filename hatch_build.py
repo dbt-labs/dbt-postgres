@@ -1,5 +1,5 @@
 import os
-from typing import Any
+from typing import Any, Dict
 
 from hatchling.builders.config import BuilderConfig
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
@@ -43,7 +43,7 @@ class CustomBuildHook(BuildHookInterface[BuilderConfig]):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-    def initialize(self, version: str, build_data: dict[str, Any]) -> None:
+    def initialize(self, version: str, build_data: Dict) -> None:
         build_data["dependencies"] = BASE_DEPS
         psycopg2_pkg_name = _dbt_psycopg2_name()
         build_data["dependencies"].append(f"{psycopg2_pkg_name}>=2.9,<3.0")
