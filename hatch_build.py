@@ -1,6 +1,4 @@
-import logging
 import os
-import sys
 from typing import Any
 
 from hatchling.builders.config import BuilderConfig
@@ -37,6 +35,10 @@ def _dbt_psycopg2_name():
 
 
 class CustomBuildHook(BuildHookInterface[BuilderConfig]):
+    """
+    Custom build hook to install psycopg2 instead of psycopg2-binary based on the presence of `DBT_PSYCOPG2_NAME` env
+    var. This is necessary as psycopg2-binary is better for local development, but psycopg2 is better for production.
+    """
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
