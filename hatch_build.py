@@ -7,7 +7,7 @@ from hatchling.plugin import hookimpl
 
 BASE_DEPS = [
     # psycopg2 dependency installed in custom hatch_build.py
-    "dbt-adapters>=0.1.0a1,<2.0",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@dbeatty/unknown-data-type-code-8912",
     # add dbt-core to ensure backwards compatibility of installation, this is not a functional dependency
     "dbt-core>=1.8.0a1",
     # installed via dbt-adapters but used directly
