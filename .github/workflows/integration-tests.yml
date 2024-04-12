@@ -109,7 +109,7 @@ jobs:
           file-name: "integration_results"
           python-version: ${{ matrix.python-version }}
 
-  psycopg2-version:
+  psycopg2-check:
     name: "Test psycopg2 build version"
     runs-on: ${{ matrix.scenario.platform }}
     strategy:
@@ -126,6 +126,6 @@ jobs:
           python -m pip install .
           PSYCOPG2_PIP_ENTRY=$(pip list | grep "psycopg2 " || pip list | grep psycopg2-binary)
           PSYCOPG2_NAME="${PSYCOPG2_PIP_ENTRY%% *}"
-          if [[ ${{ PSYCOPG2_NAME != matrix.scenario.psycopg2-name }} ]]; then
+          if [[ $PSYCOPG2_NAME != ${{ matrix.scenario.psycopg2-name }} ]]; then
             exit 1
           fi
