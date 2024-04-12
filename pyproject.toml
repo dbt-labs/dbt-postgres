@@ -23,7 +23,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 dependencies = [
-    "dbt-adapters>=0.1.0a1,<2.0",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@dbeatty/unknown-data-type-code-8912",
     "psycopg2>=2.9,<3.0",
     # installed via dbt-adapters but used directly
     "dbt-common>=0.1.0a1,<2.0",
@@ -39,6 +39,9 @@ Changelog = "https://github.com/dbt-labs/dbt-postgres/blob/main/CHANGELOG.md"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.build.targets.sdist]
 include = ["dbt"]
