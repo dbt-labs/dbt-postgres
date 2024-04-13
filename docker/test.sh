@@ -17,6 +17,6 @@ clear \
 "#########################################\n"\
 && docker build --tag dbt-postgres-1.0.0b1 \
   --target dbt-postgres \
-  --build-arg dbt_postgres_ref=dbt-postgres@v1.0.0b1 \
+  --build-arg commit_ref=v1.0.0b1 \
   docker \
 && docker run dbt-postgres-1.0.0b1 --version

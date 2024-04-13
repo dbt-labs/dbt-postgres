@@ -29,7 +29,6 @@ jobs:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
     outputs:
       version: ${{ steps.release-inputs.outputs.version }}
-      is-docker-release: ${{ steps.semver.outputs.is-pre-release == 0 }}
 
     steps:
       - name: Check out repository
@@ -48,12 +47,6 @@ jobs:
           echo "archive-name=$archive_name" >> $GITHUB_OUTPUT
           echo "version=version" >> $GITHUB_OUTPUT
 
-      - name: Audit version to determine if it is a pre-release
-        id: semver
-        uses: dbt-labs/actions/parse-semver@v1.1.0
-        with:
-          version: ${{ steps.release-inputs.outputs.version }}
-
       - name: Build `dbt-postgres`
         uses: dbt-labs/dbt-adapters/.github/actions/build-hatch@main
         with:
@@ -68,10 +61,11 @@ jobs:
   docker-release:
     name: "Docker Release"
     needs: [release]
-    if: ${{ needs.release.outputs.is-docker-release }}
+    if: ${{ !failure() && !cancelled() }}
     permissions:
       packages: write
-    uses: dbt-labs/dbt-release/.github/workflows/release-docker.yml@main
+    uses: dbt-labs/dbt-release/.github/workflows/release-docker.yml@docker-release
     with:
-      package: "dbt-postgres"
+      package: ${{ github.event.repository.name }}
       version_number: ${{ needs.release.outputs.version }}
+      test_run: ${{ inputs.deploy-to == 'test' }}

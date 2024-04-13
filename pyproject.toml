@@ -60,6 +60,12 @@ dependencies = [
     "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
 ]
+[tool.hatch.envs.default.scripts]
+docker-dev = [
+	"docker build -f docker/dev.Dockerfile -t dbt-postgres-dev .",
+	"docker run --rm -it --name dbt-postgres-dev -v $(pwd):/opt/code dbt-postgres-dev",
+]
+docker-prod = "docker build -f docker/Dockerfile -t dbt-postgres ."
 
 [tool.hatch.envs.lint]
 detached = true
