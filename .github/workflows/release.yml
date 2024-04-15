@@ -64,7 +64,7 @@ jobs:
     if: ${{ !failure() && !cancelled() }}
     permissions:
       packages: write
-    uses: dbt-labs/dbt-release/.github/workflows/release-docker.yml@docker-release
+    uses: dbt-labs/dbt-release/.github/workflows/release-docker.yml@main
     with:
       version_number: ${{ needs.release.outputs.version }}
       test_run: ${{ inputs.deploy-to == 'test' }}
