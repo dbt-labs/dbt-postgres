@@ -198,7 +198,6 @@ jobs:
           echo "::notice title=${{ env.NOTIFICATION_PREFIX }}: $title::$message"
 
   core-team:
-    name: "Set Core team membership"
     if: needs.release-inputs.outputs.changelog-exists == 'false'
     uses: dbt-labs/actions/.github/workflows/determine-team-membership.yml@main
     with:
