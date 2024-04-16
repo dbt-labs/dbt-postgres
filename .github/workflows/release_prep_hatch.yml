@@ -40,12 +40,15 @@ on:
         type: string
         default: "main"
       version:
+        description: "The version to release"
         required: true
         type: string
       deploy-to:
+        description: "Deploy to test or prod"
         type: string
         default: "prod"
       is-nightly-release:
+        description: "Identify if this is a nightly release"
         type: boolean
         default: false
     outputs:

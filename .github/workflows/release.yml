@@ -3,9 +3,17 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
+      branch:
+        description: "The branch to release from"
+        type: string
+        default: "main"
+      version:
+        description: "The version to release"
+        required: true
+        type: string
       deploy-to:
+        description: "Deploy to test or prod"
         type: choice
-        description: Choose where to publish (test/prod)
         options:
         - prod
         - test
@@ -24,102 +32,76 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  release-inputs:
-    name: Release inputs
+  release-prep:
+    name: "Release prep: generate changelog, bump version"
+    uses: ./github/workflow/release_prep_hatch.yml
+    with:
+      branch: ${{ inputs.branch }}
+      version: ${{ inputs.version }}
+      deploy-to: ${{ inputs.deploy-to }}
+
+  build-release:
+    name: "Build release"
+    needs: release-prep
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.version.outputs.version }}
       archive-name: ${{ steps.archive.outputs.name }}
-      changelog-path: ${{ steps.changelog.outputs.path }}
-
     steps:
-      - name: Check out repository
+      - name: "Checkout ${{ github.repository }}@${{ inputs.branch }}"
         uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.branch }}
           persist-credentials: false
 
-      - name: Setup `hatch`
+      - name: "Setup `hatch`"
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
 
-      - name: Set version
-        id: version
-        run: |
-          version=$(hatch version)
-          echo "version=$version" >> $GITHUB_OUTPUT
-
-      - name: Audit version and parse into parts
-        id: semver
-        uses: dbt-labs/actions/parse-semver@v1.1.0
-        with:
-          version: ${{ steps.version.outputs.version }}
-
-      - name: Set archive name
+      - name: "Set archive name"
         id: archive
         run: |
-          archive_name=dbt-postgres-$version-${{ inputs.deploy-to }}
+          archive_name=${{ github.repository }}-${{ inputs.version }}-${{ inputs.deploy-to }}
           echo "name=$archive_name" >> $GITHUB_OUTPUT
 
-      - name: Set changelog path
-        id: changelog
-        shell: bash
-        run: |
-          path=".changes/"
-          if [[ ${{ steps.semver.outputs.is-pre-release }} -eq 1 ]]
-          then
-            path+="${{ steps.semver.outputs.base-version }}-${{ steps.semver.outputs.pre-release }}.md"
-          else
-            path+="${{ steps.semver.outputs.base-version }}.md"
-          fi
-          echo "path=$path" >> $GITHUB_OUTPUT
+      - name: "Build ${{ github.repository }}"
+        uses: dbt-labs/dbt-adapters/.github/actions/build-hatch@main
+        with:
+          archive-name: ${{ steps.archive.outputs.name }}
 
   pypi-release:
-    name: PyPI release
+    name: "PyPI release"
     runs-on: ubuntu-latest
-    needs: [release-inputs]
+    needs: build-release
     environment:
       name: ${{ inputs.deploy-to }}
       url: ${{ vars.PYPI_PROJECT_URL }}
     permissions:
-      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
-
+      id-token: write  # this permission is required for trusted publishing
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - name: Setup `hatch`
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
-
-      - name: Build `dbt-postgres`
-        uses: dbt-labs/dbt-adapters/.github/actions/build-hatch@main
-        with:
-          archive-name: ${{ needs.release-inputs.outputs.archive-name }}
-
-      - name: Publish to PyPI
+      - name: "Publish to PyPI"
         uses: dbt-labs/dbt-adapters/.github/actions/publish-pypi@main
         with:
           pypi-repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
-          archive-name: ${{ needs.release-inputs.outputs.archive-name }}
+          archive-name: ${{ needs.build-release.outputs.archive-name }}
 
   github-release:
-    name: GitHub release
-    if: ${{ !failure() && !cancelled() }}
-    needs: [release-inputs]
-    uses: dbt-labs/dbt-release/.github/workflows/github-release.yml@main
+    name: "GitHub release"
+    needs:
+      - build-release
+      - release-prep
+    uses: dbt-labs/dbt-adapters/.github/workflows/github-release.yml@main
     with:
-      sha: ${{ inputs.sha }}
-      version_number: ${{ needs.release-inputs.outputs.version }}
-      changelog_path: ${{ needs.release-inputs.outputs.changelog-path }}
+      sha: ${{ needs.release-prep.outputs.release-sha }}
+      version_number: ${{ inputs.version }}
+      changelog_path: ${{ needs.release-prep.outputs.changelog-path }}
       test_run: ${{ inputs.deploy-to == 'test' }}
+      archive_name: ${{ needs.build-release.outputs.archive-name }}
 
   docker-release:
-    name: Docker release
-    needs: [release-inputs, github-release]  # docker relies on the published tag from github-release
-    if: ${{ !failure() && !cancelled() }}
+    name: "Docker release"
+    needs: github-release  # docker relies on the published tag from github-release
     permissions:
-      packages: write
+      packages: write  # this permission is required for publishing to GHCR
     uses: dbt-labs/dbt-release/.github/workflows/release-docker.yml@main
     with:
-      version_number: ${{ needs.release-inputs.outputs.version }}
+      version_number: ${{ inputs.version }}
       test_run: ${{ inputs.deploy-to == 'test' }}
