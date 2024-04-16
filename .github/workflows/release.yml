@@ -39,6 +39,7 @@ jobs:
       branch: ${{ inputs.branch }}
       version: ${{ inputs.version }}
       deploy-to: ${{ inputs.deploy-to }}
+    secrets: inherit
 
   build-release:
     name: "Build release"
