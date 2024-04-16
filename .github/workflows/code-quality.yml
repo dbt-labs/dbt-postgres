@@ -43,7 +43,7 @@ jobs:
         run: ./.github/scripts/update_dev_packages.sh ${{ inputs.dbt_adapters_branch }} "main"
 
       - name: Setup `hatch`
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@config/add-precommit
 
       - name: Run code quality
         shell: bash
