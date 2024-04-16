@@ -1,0 +1,33 @@
+# For more on configuring pre-commit hooks (see https://pre-commit.com/)
+
+# Force all unspecified python hooks to run python 3.8
+default_language_version:
+    python: python3
+
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    -   id: check-yaml
+        args: [--unsafe]
+    -   id: check-json
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: check-case-conflict
+-   repo: local
+    hooks:
+    -   id: black
+        name: black
+        entry: black
+        language: system
+        types: [python]
+    -   id: flake8
+        name: flake8
+        entry: flake8
+        language: system
+        types: [python]
+    -   id: mypy
+        name: mypy
+        entry: mypy
+        language: system
+        types: [python]

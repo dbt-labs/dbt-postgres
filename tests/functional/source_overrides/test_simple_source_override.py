@@ -5,7 +5,6 @@ from dbt.tests.util import check_relations_equal, run_dbt, update_config_file
 import pytest
 
 from tests.functional.source_overrides.fixtures import (
-    local_dependency,
     models__schema_yml,
     seeds__expected_result_csv,
     seeds__my_real_other_seed_csv,

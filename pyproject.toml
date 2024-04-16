@@ -59,7 +59,18 @@ path = "dbt/adapters/postgres/__version__.py"
 dependencies = [
     "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
+    "black>=24.3",
+    "flake8",
+    "Flake8-pyproject",
+    "pre-commit==3.7.0",
+    "mypy",
+    "types-protobuf",
+    "types-pytz",
+    "types-PyYAML",
 ]
+post-install-commands = ["pre-commit install"]
+[tool.hatch.envs.default.scripts]
+precommit = "pre-commit run --all-files"
 
 [tool.hatch.envs.lint]
 detached = true
@@ -125,8 +136,6 @@ dependencies = [
     "twine",
     "check-wheel-contents",
 ]
-
-
 [tool.hatch.envs.build.scripts]
 check-all = [
     "- check-wheel",

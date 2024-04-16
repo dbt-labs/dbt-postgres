@@ -8,7 +8,6 @@ import pytest
 from tests.functional.source_overrides.fixtures import (
     dupe_models__schema1_yml,
     dupe_models__schema2_yml,
-    local_dependency,
 )
 
 

@@ -167,7 +167,7 @@ class TestPostgresConnection(TestCase):
     @pytest.mark.skip(
         """
         We moved from __version__ to __about__ when establishing `hatch` as our build tool.
-        However, `adapters.factory.register_adapter` assumes __version__ when determining 
+        However, `adapters.factory.register_adapter` assumes __version__ when determining
         the adapter version. This test causes an import error
     """
     )
@@ -183,7 +183,7 @@ class TestPostgresConnection(TestCase):
     @pytest.mark.skip(
         """
         We moved from __version__ to __about__ when establishing `hatch` as our build tool.
-        However, `adapters.factory.register_adapter` assumes __version__ when determining 
+        However, `adapters.factory.register_adapter` assumes __version__ when determining
         the adapter version. This test causes an import error
     """
     )
