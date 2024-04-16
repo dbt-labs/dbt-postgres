@@ -70,31 +70,10 @@ dependencies = [
 ]
 post-install-commands = ["pre-commit install"]
 [tool.hatch.envs.default.scripts]
-precommit = "pre-commit run --all-files"
-
-[tool.hatch.envs.lint]
-detached = true
-dependencies = [
-    "black>=24.3",
-    "flake8",
-    "Flake8-pyproject",
-]
-[tool.hatch.envs.lint.scripts]
-all = [
-    "black",
-    "flake8",
-]
+code-quality = "pre-commit run --all-files"  # runs others via hooks
 black = "python -m black ."
 flake8 = "python -m flake8 ."
-
-[tool.hatch.envs.typecheck]
-dependencies = [
-    "mypy",
-    "types-protobuf",
-    "types-pytz",
-]
-[tool.hatch.envs.typecheck.scripts]
-all = "python -m mypy ."
+mypy = "python -m mypy ."
 
 [tool.hatch.envs.unit-tests]
 dependencies = [
@@ -105,7 +84,6 @@ dependencies = [
     "pytest-xdist",
 ]
 extra-dependencies = [
-    # TODO: remove `dbt-core` dependencies from unit tests
     "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
     "dbt-core @ git+https://github.com/dbt-labs/dbt-core.git#subdirectory=core",
