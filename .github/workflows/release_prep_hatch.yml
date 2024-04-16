@@ -197,6 +197,13 @@ jobs:
           message="Create release branch: ${{ steps.release-branch.outputs.name }}"
           echo "::notice title=${{ env.NOTIFICATION_PREFIX }}: $title::$message"
 
+  core-team:
+    name: "Set Core team membership"
+    if: needs.release-inputs.outputs.changelog-exists == 'false'
+    uses: dbt-labs/actions/.github/workflows/determine-team-membership.yml@main
+    with:
+      github_team: "core-group"
+
   generate-changelog:
     runs-on: ubuntu-latest
     if: needs.release-inputs.outputs.changelog-exists == 'false'
@@ -204,6 +211,7 @@ jobs:
     needs:
       - release-inputs
       - release-branch
+      - core-team
 
     steps:
       - name: "Checkout ${{ github.repository }}@${{ needs.release-branch.outputs.name }}"
@@ -218,12 +226,6 @@ jobs:
         run: |
           brew tap miniscruff/changie https://github.com/miniscruff/changie
           brew install changie
-
-      - name: "Set Core team membership"
-        id: core-team
-        uses: dbt-labs/actions/.github/workflows/determine-team-membership.yml@main
-        with:
-          github_team: "core-group"
 
       - name: "Generate changelog at ${{ needs.release-inputs.outputs.changelog-path }}"
         run: |
@@ -242,7 +244,7 @@ jobs:
           fi
           changie merge
         env:
-          CHANGIE_CORE_TEAM: ${{ steps.core-team.outputs.team_membership }}
+          CHANGIE_CORE_TEAM: ${{ needs.core-team.outputs.team_membership }}
 
       - name: "Remove trailing whitespace and missing new lines"
         # this step will fail on whitespace errors but also correct them
