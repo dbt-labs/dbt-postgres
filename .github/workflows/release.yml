@@ -22,6 +22,11 @@ on:
         description: "The last commit sha in the release"
         type: string
         required: true
+      only_docker:
+        description: "Only release Docker image, skip GitHub & PyPI"
+        type: boolean
+        default: false
+        required: false
 
 permissions:
   contents: write # this is the permission that allows creating a new release
@@ -99,6 +104,10 @@ jobs:
 
   docker-release:
     name: "Docker release"
+    # We cannot release to docker on a test run because it uses the tag in GitHub as
+    # what we need to release but draft releases don't actually tag the commit so it
+    # finds nothing to release
+    if: ${{ !failure() && !cancelled() && (inputs.deploy-to == 'prod' || inputs.only_docker) }}
     needs: github-release  # docker relies on the published tag from github-release
     permissions:
       packages: write  # this permission is required for publishing to GHCR
