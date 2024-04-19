@@ -86,7 +86,7 @@ jobs:
           PGDATABASE: postgres
 
       - name: Setup `hatch`
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@config/add-precommit
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
         with:
           python-version: ${{ matrix.python-version }}
 
