@@ -59,7 +59,8 @@ path = "dbt/adapters/postgres/__version__.py"
 dependencies = [
     "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
-    "pre-commit==3.7.0",
+    'pre-commit==3.7.0;python_version>="3.9"',
+    'pre-commit==3.5.0;python_version=="3.8"',
 ]
 [tool.hatch.envs.default.scripts]
 dev = "pre-commit install"
