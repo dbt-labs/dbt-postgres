@@ -205,7 +205,5 @@ class PostgresConnectionManager(SQLConnectionManager):
         if type_code in psycopg2.extensions.string_types:
             return psycopg2.extensions.string_types[type_code].name
         else:
-            warn_or_error(
-                TypeCodeNotFound(type_code=type_code)
-            )
+            warn_or_error(TypeCodeNotFound(type_code=type_code))
             return f"unknown type_code {type_code}"
