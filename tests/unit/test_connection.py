@@ -2,7 +2,7 @@ from multiprocessing import get_context
 from unittest import TestCase, mock
 
 import pytest
-from dbt.context.manifest import generate_query_header_context
+from dbt.context.query_header import generate_query_header_context
 from dbt.context.providers import generate_runtime_macro_context
 from dbt.contracts.files import FileHash
 from dbt.contracts.graph.manifest import ManifestStateCheck
