@@ -9,16 +9,19 @@ from dbt.adapters.postgres.relation_configs import PostgresIndexConfig
 
 def test_index_config_changes():
     index_0_old = {
+        "name": "my_index_0",
         "column_names": {"column_0"},
         "unique": True,
         "method": "btree",
     }
     index_1_old = {
+        "name": "my_index_1",
         "column_names": {"column_1"},
         "unique": True,
         "method": "btree",
     }
     index_2_old = {
+        "name": "my_index_2",
         "column_names": {"column_2"},
         "unique": True,
         "method": "btree",
@@ -31,6 +34,7 @@ def test_index_config_changes():
     index_2_new = deepcopy(index_2_old)
     index_2_new.update(method="hash")
     index_3_new = {
+        "name": "my_index_3",
         "column_names": {"column_3"},
         "unique": True,
         "method": "hash",
