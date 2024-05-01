@@ -55,6 +55,9 @@ packages = ["dbt"]
 [tool.hatch.version]
 path = "dbt/adapters/postgres/__version__.py"
 
+[tool.hatch.metadata]
+allow-direct-references = true
+
 [tool.hatch.envs.default]
 dependencies = [
     "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@dbeatty/date-macro",
