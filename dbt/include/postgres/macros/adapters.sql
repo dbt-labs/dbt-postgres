@@ -107,10 +107,12 @@
     {# If the relation is partitioned, rename the subtables #}
     {% set existing_partitions_query %}
       select
-        inhrelid::regclass::text as from_table_name,
+        inhrelid::regclass as from_table_name,
         regexp_substr(inhrelid::regclass::text, '[^_]*$') as partition_suffix -- Get the string after the last underscore
-      from pg_catalog.pg_inherits
-      where inhparent = '{{ from_relation.schema }}.{{ from_relation.identifier }}'::regclass;
+      from pg_inherits i
+      join pg_class c on i.inhparent = c.oid
+      join pg_namespace ns on c.relnamespace = ns.oid
+      where ns.nspname = '{{ from_relation.schema }}' and c.relname = '{{ from_relation.identifier }}';
     {% endset %}
     {% set existing_partitions_results = run_query(existing_partitions_query) %}
 
