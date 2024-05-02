@@ -57,9 +57,8 @@ jobs:
       - name: "Checkout ${{ github.repository }}@${{ inputs.branch }}"
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.branch }}
-          persist-credentials: false
           ref: "${{ inputs.ref }}"
+          persist-credentials: false
 
       - name: "Setup `hatch`"
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
