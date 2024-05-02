@@ -337,7 +337,7 @@ jobs:
           ref: ${{ needs.release-branch.outputs.name }}
 
       - name: "Setup `hatch`"
-        uses: ./.github/actions/setup-hatch
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
 
       - name: "Run unit tests"
         run: hatch run unit-tests:all
@@ -360,7 +360,7 @@ jobs:
           ref: ${{ needs.release-branch.outputs.name }}
 
       - name: "Set up `hatch`"
-        uses: ./.github/actions/setup-hatch
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
 
       - name: "Run integration tests"
         run: hatch run integration-tests:all
