@@ -109,7 +109,7 @@ jobs:
           ref: ${{ inputs.branch }}
 
       - name: "Setup `hatch`"
-        uses: ./.github/actions/setup-hatch
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
 
       - name: "Parse input version"
         id: semver
