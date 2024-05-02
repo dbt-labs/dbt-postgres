@@ -13,21 +13,16 @@ on:
         type: string
       deploy-to:
         description: "Deploy to test or prod"
-        type: choice
-        options:
-        - prod
-        - test
+        type: environment
         default: prod
       ref:
         description: "The ref (sha or branch name) to use"
         type: string
         default: "main"
-        required: true
       only_docker:
         description: "Only release Docker image, skip GitHub & PyPI"
         type: boolean
         default: false
-        required: false
 
 permissions:
   contents: write # this is the permission that allows creating a new release
@@ -57,7 +52,7 @@ jobs:
       - name: "Checkout ${{ github.repository }}@${{ inputs.branch }}"
         uses: actions/checkout@v4
         with:
-          ref: "${{ inputs.ref }}"
+          ref: ${{ needs.release-prep.outputs.release-branch }}
           persist-credentials: false
 
       - name: "Setup `hatch`"
@@ -87,7 +82,7 @@ jobs:
       - name: "Publish to PyPI"
         uses: dbt-labs/dbt-adapters/.github/actions/publish-pypi@main
         with:
-          pypi-repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
+          repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
           archive-name: ${{ needs.build-release.outputs.archive-name }}
 
   github-release:

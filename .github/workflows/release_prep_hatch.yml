@@ -52,9 +52,12 @@ on:
         type: boolean
         default: false
     outputs:
+      release-branch:
+        description: "The branch to be released from"
+        value: ${{ jobs.release.outputs.branch }}
       release-sha:
         description: "The SHA to be released"
-        value: ${{ jobs.release-sha.outputs.sha }}
+        value: ${{ jobs.release.outputs.sha }}
       changelog-path:
         description: "The path to the changelog from the repo root for this version, e.g. .changes/1.8.0-b1.md"
         value: ${{ jobs.release-inputs.outputs.changelog-path }}
@@ -392,7 +395,7 @@ jobs:
           message="Merge ${{ needs.release-branch.outputs.name }} into ${{ inputs.branch }}"
           echo "::notice title=${{ env.NOTIFICATION_PREFIX }}: $title::$message"
 
-  release-sha:
+  release:
     runs-on: ubuntu-latest
     needs:
       - release-branch
@@ -404,11 +407,12 @@ jobs:
     # Otherwise, we generated a changelog and/or did the version bump in this workflow and there is a
     # new sha to use from the merge we just did. Grab that here instead.
     outputs:
+      branch: ${{ steps.release-branch.outputs.name }}
       sha: ${{ steps.release-sha.outputs.sha }}
 
     steps:
       - name: "Set release branch"
-        id: release-branch
+        id: branch
         run: |
           branch=""
           if [ ${{ inputs.deploy-to == 'test' }} ] || [ ${{ inputs.is-nightly-release == 'true' }} ]
@@ -419,16 +423,16 @@ jobs:
           fi
           echo "name=$branch" >> $GITHUB_OUTPUT
 
-      - name: "Checkout ${{ github.repository }}@${{ steps.release-branch.outputs.name }}"
+      - name: "Checkout ${{ github.repository }}@${{ steps.branch.outputs.name }}"
         uses: actions/checkout@v3
         with:
-          ref: ${{ steps.release-branch.outputs.name }}
+          ref: ${{ steps.branch.outputs.name }}
 
       - name: "Set release SHA"
         id: release-sha
         run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       # if this is a real release and a release branch was created, delete it
-      - name: "Delete release branch: ${{ needs.release-branch.outputs.name }}"
+      - name: "Delete release branch: ${{ needs.branch.outputs.name }}"
         if: ${{ inputs.deploy-to == 'prod' && inputs.is-nightly-release == 'false' && needs.release-branch.outputs.name != '' }}
-        run: git push origin -d ${{ needs.release-branch.outputs.name }}
+        run: git push origin -d ${{ needs.branch.outputs.name }}
