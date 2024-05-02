@@ -18,9 +18,10 @@ on:
         - prod
         - test
         default: prod
-      sha:
-        description: "The last commit sha in the release"
+      ref:
+        description: "The ref (sha or branch name) to use"
         type: string
+        default: "main"
         required: true
       only_docker:
         description: "Only release Docker image, skip GitHub & PyPI"
@@ -58,6 +59,7 @@ jobs:
         with:
           ref: ${{ inputs.branch }}
           persist-credentials: false
+          ref: "${{ inputs.ref }}"
 
       - name: "Setup `hatch`"
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
