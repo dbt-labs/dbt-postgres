@@ -15,10 +15,6 @@ on:
         description: "Deploy to test or prod"
         type: environment
         default: prod
-      ref:
-        description: "The ref (sha or branch name) to use"
-        type: string
-        default: "main"
       only_docker:
         description: "Only release Docker image, skip GitHub & PyPI"
         type: boolean
