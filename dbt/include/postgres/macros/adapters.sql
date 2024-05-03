@@ -108,7 +108,7 @@
     {% set existing_partitions_query %}
       select
         inhrelid::regclass as from_table_name,
-        regexp_substr(inhrelid::regclass::text, '[^_]*$') as partition_suffix -- Get the string after the last underscore
+        '_' || regexp_substr(inhrelid::regclass::text, '[^_]*$') as partition_suffix -- Get the string after the last underscore
       from pg_inherits i
       join pg_class c on i.inhparent = c.oid
       join pg_namespace ns on c.relnamespace = ns.oid
