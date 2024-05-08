@@ -1,0 +1,67 @@
+# **what?**
+# - verify that pull requests have a changelog entry unless otherwise specified
+# - create backport PRs
+#
+# **why?**
+# - ensure all code changes are reflected in the final CHANGELOG.md
+# - ensure consistent process when backporting changes
+#
+# **when?**
+# - when a pull request sees any change
+name: Pull request bot
+
+on:
+    pull_request:
+        types: [opened, reopened, labeled, unlabeled, synchronize]
+
+permissions:
+    contents: read
+    pull-requests: write
+
+jobs:
+    backport:
+        name: Backport
+        runs-on: ubuntu-latest
+        if: >-
+            github.event.pull_request.merged &&
+            github.event.action == 'labeled' &&
+            contains(github.event.label.name, 'backport')
+        steps:
+        -   uses: tibdex/backport@v2
+            with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    changelog-entry-check:
+        name: Changelog entry check
+        uses: dbt-labs/actions/.github/workflows/changelog-existence.yml@main
+        with:
+            changelog_comment: |
+                Thank you for your pull request!
+                We could not find a changelog entry for this change.
+                For details on how to document a change, see the [dbt-postgres contributing guide](https://github.com/dbt-labs/dbt-postgres/blob/main/CONTRIBUTING.md).
+            skip_label: Skip Changelog
+        secrets: inherit
+
+    create-bot-changelog-entry:
+        name: Create bot changelog entry
+        strategy:
+            matrix:
+              include:
+              -   label: dependencies
+                  changie_kind: Dependencies
+        runs-on: ubuntu-latest
+        steps:
+        -   name: Create and commit changelog on bot PR
+            if: >-
+                contains(github.event.pull_request.labels.*.name, 'dependencies') &&
+                (github.event.action == 'labeled' || github.event.action == 'opened')
+            id: bot_changelog
+            uses: emmyoop/changie_bot@v1
+            with:
+                GITHUB_TOKEN: ${{ secrets.FISHTOWN_BOT_PAT }}
+                commit_author_name: Github Build Bot
+                commit_author_email: <buildbot@fishtownanalytics.com>
+                commit_message: '[automated] add changelog entry for dependabot PR'
+                changie_kind: Dependencies
+                label: dependencies
+                custom_changelog_string: 'custom:\n  Author: ${{ github.event.pull_request.user.login }}\n  PR: ${{ github.event.pull_request.number }}'
