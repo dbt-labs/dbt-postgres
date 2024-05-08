@@ -1,14 +1,19 @@
 # **what?**
 # - respond to user comments by updating issues from `awaiting_response` to `triage`
+# - open issues in docs.getdbt.com for new changes
 #
 # **why?**
 # - automate issue triage
+# - ensure updates are reflected in user docs
 #
 # **when?**
 # - users comment on issues
+# - issues are closed with the `user docs` label
 name: Issue bot
 
 on:
+    issues:
+        types: [closed, labeled]
     issue_comment:
 
 permissions:
@@ -18,10 +23,29 @@ jobs:
     triage:
         name: Update triage label
         if: >-
-            contains(github.event.issue.labels.*.name, 'awaiting_response') &&
-            github.event == 'issue_comment'
+            github.event == 'issue_comment' &&
+            contains(github.event.issue.labels.*.name, 'awaiting_response')
         uses: dbt-labs/actions/.github/workflows/swap-labels.yml@main
         with:
             add_label: triage
             remove_label: awaiting_response
+        secrets: inherit
+
+    open-docs-issue:
+        name: Open docs issue
+        # We only want to run this when the PR has been merged or the label in the labeled event is `user docs`.
+        # Otherwise, it runs the risk of duplication of issues being created due to merge and label both
+        # triggering this workflow to run and neither having generating the comment before the other runs.
+        # This lives here instead of the shared workflow because this is where we decide if it should run or not.
+        if: |
+            github.event == 'issues' &&
+            github.event.issue.closed == true && (
+                (github.event.action == 'closed' && contains(github.event.issue.labels.*.name, 'user docs')) ||
+                (github.event.action == 'labeled' && github.event.label.name == 'user docs')
+            )
+        uses: dbt-labs/actions/.github/workflows/open-issue-in-repo.yml@main
+        with:
+            issue_repository: "dbt-labs/docs.getdbt.com"
+            issue_title: "Docs Changes Needed from ${{ github.event.repository.name }} PR #${{ github.event.pull_request.number }}"
+            issue_body: "At a minimum, update body to include a link to the page on docs.getdbt.com requiring updates and what part(s) of the page you would like to see updated."
         secrets: inherit
