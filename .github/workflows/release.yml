@@ -67,6 +67,7 @@ jobs:
 
   pypi-release:
     name: "PyPI release"
+    if: ${{ !failure() && !cancelled() && !inputs.only_docker }}
     runs-on: ubuntu-latest
     needs: build-release
     environment:
@@ -83,6 +84,7 @@ jobs:
 
   github-release:
     name: "GitHub release"
+    if: ${{ !failure() && !cancelled() && !inputs.only_docker }}
     needs:
       - build-release
       - release-prep
