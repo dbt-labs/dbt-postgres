@@ -436,8 +436,8 @@ jobs:
     # Otherwise, we generated a changelog and/or did the version bump in this workflow and there is a
     # new sha to use from the merge we just did. Grab that here instead.
     outputs:
-      branch: ${{ steps.release-branch.outputs.name }}
-      sha: ${{ steps.release-sha.outputs.sha }}
+      branch: ${{ steps.branch.outputs.name }}
+      sha: ${{ steps.sha.outputs.sha }}
 
     steps:
       - name: "Set release branch"
@@ -458,7 +458,7 @@ jobs:
           ref: ${{ steps.branch.outputs.name }}
 
       - name: "Set release SHA"
-        id: release-sha
+        id: sha
         run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       # if this is a real release and a release branch was created, delete it

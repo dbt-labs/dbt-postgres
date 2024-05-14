@@ -45,7 +45,7 @@ jobs:
     outputs:
       archive-name: ${{ steps.archive.outputs.name }}
     steps:
-      - name: "Checkout ${{ github.event.repository.name }}@${{ inputs.branch }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-prep.outputs.release-branch }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.release-prep.outputs.release-branch }}
