@@ -103,7 +103,7 @@ jobs:
           echo Python version:       ${{ env.PYTHON_TARGET_VERSION }}
           echo Notification prefix:  ${{ env.NOTIFICATION_PREFIX }}
 
-      - name: "Checkout ${{ github.repository }}@${{ inputs.branch }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ inputs.branch }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.branch }}
@@ -171,7 +171,7 @@ jobs:
       name: ${{ steps.release-branch.outputs.name }}
 
     steps:
-      - name: "Checkout ${{ github.repository }}@${{ inputs.branch }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ inputs.branch }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.branch }}
@@ -216,7 +216,7 @@ jobs:
       - core-team
 
     steps:
-      - name: "Checkout ${{ github.repository }}@${{ needs.release-branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name }}"
         uses: actions/checkout@v3
         with:
           ref: ${{ needs.release-branch.outputs.name }}
@@ -289,7 +289,7 @@ jobs:
       - generate-changelog
 
     steps:
-      - name: "Checkout ${{ github.repository }}@${{ needs.release-branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name }}"
         uses: actions/checkout@v3
         with:
           ref: ${{ needs.release-branch.outputs.name }}
@@ -331,7 +331,7 @@ jobs:
       - bump-version
 
     steps:
-      - name: "Checkout ${{ github.repository }}@${{ needs.release-branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.release-branch.outputs.name }}
@@ -367,7 +367,7 @@ jobs:
           - 5432:5432
 
     steps:
-      - name: "Checkout ${{ github.repository }}@${{ needs.release-branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.release-branch.outputs.name }}
@@ -407,7 +407,7 @@ jobs:
         inputs.deploy-to == 'prod'
 
     steps:
-      - name: "Checkout ${{ github.repository }}"
+      - name: "Checkout ${{ github.event.repository.name }}"
         uses: actions/checkout@v3
 
       - name: "Merge changes into ${{ inputs.branch }}"
@@ -452,7 +452,7 @@ jobs:
           fi
           echo "name=$branch" >> $GITHUB_OUTPUT
 
-      - name: "Checkout ${{ github.repository }}@${{ steps.branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ steps.branch.outputs.name }}"
         uses: actions/checkout@v3
         with:
           ref: ${{ steps.branch.outputs.name }}

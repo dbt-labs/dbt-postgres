@@ -45,7 +45,7 @@ jobs:
     outputs:
       archive-name: ${{ steps.archive.outputs.name }}
     steps:
-      - name: "Checkout ${{ github.repository.name }}@${{ inputs.branch }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ inputs.branch }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.release-prep.outputs.release-branch }}
@@ -57,10 +57,10 @@ jobs:
       - name: "Set archive name"
         id: archive
         run: |
-          archive_name=${{ github.repository.name }}-${{ inputs.version }}-${{ inputs.deploy-to }}
+          archive_name=${{ github.event.repository.name }}-${{ inputs.version }}-${{ inputs.deploy-to }}
           echo "name=$archive_name" >> $GITHUB_OUTPUT
 
-      - name: "Build ${{ github.repository.name }}"
+      - name: "Build ${{ github.event.repository.name }}"
         uses: dbt-labs/dbt-adapters/.github/actions/build-hatch@main
         with:
           archive-name: ${{ steps.archive.outputs.name }}
