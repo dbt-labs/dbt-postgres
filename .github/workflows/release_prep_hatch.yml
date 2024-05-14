@@ -403,7 +403,7 @@ jobs:
       - release-inputs
     if: |
         !failure() && !cancelled() &&
-        needs.release-branch.outputs.name != '' &&
+        needs.release-branch.result == 'success' &&
         inputs.deploy-to == 'prod'
 
     steps:
@@ -442,11 +442,11 @@ jobs:
     steps:
       - name: "Set release branch"
         id: branch
+        # If a release branch was created and not merged, use the release branch
+        # Otherwise, use the input branch because either nothing was done, or the changes were merged back in
         run: |
-          branch=""
-          if [ ${{ inputs.deploy-to == 'test' }} ] || [ ${{ inputs.is-nightly-release == 'true' }} ]
-          then
-            branch=${{ needs.release-branch.outputs.name }}
+          if [ ${{ needs.release-branch.result == 'success' }} && ${{ needs.merge-release-branch.result == 'skipped' }} ]; then
+            branch="${{ needs.release-branch.outputs.name }}"
           else
             branch="${{ inputs.branch }}"
           fi
