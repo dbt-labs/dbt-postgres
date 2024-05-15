@@ -31,7 +31,7 @@ concurrency:
 jobs:
   release-prep:
     name: "Release prep: generate changelog, bump version"
-    uses: dbt-labs/dbt-postgres/.github/workflows/release_prep_hatch.yml@config/docker-release
+    uses: dbt-labs/dbt-postgres/.github/workflows/release_prep_hatch.yml@main
     with:
       branch: ${{ inputs.branch }}
       version: ${{ inputs.version }}
@@ -105,7 +105,7 @@ jobs:
     needs: github-release  # docker relies on the published tag from github-release
     permissions:
       packages: write  # this permission is required for publishing to GHCR
-    uses: dbt-labs/dbt-release/.github/workflows/release-docker.yml@latest-wrangler-new-docker
+    uses: dbt-labs/dbt-release/.github/workflows/release-docker.yml@main
     with:
       version_number: ${{ inputs.version }}
       test_run: ${{ inputs.deploy-to == 'test' }}
