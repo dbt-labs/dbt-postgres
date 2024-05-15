@@ -1,36 +1,21 @@
 # **what?**
-# - respond to user comments by updating issues from `awaiting_response` to `triage`
 # - open issues in docs.getdbt.com for new changes
 #
 # **why?**
-# - automate issue triage
 # - ensure updates are reflected in user docs
 #
 # **when?**
-# - users comment on issues
 # - issues are closed with the `user docs` label
-name: Issue bot
+name: Docs issues
 
 on:
     issues:
         types: [closed, labeled]
-    issue_comment:
 
 permissions:
     issues: write
 
 jobs:
-    triage:
-        name: Update triage label
-        if: >-
-            github.event == 'issue_comment' &&
-            contains(github.event.issue.labels.*.name, 'awaiting_response')
-        uses: dbt-labs/actions/.github/workflows/swap-labels.yml@main
-        with:
-            add_label: triage
-            remove_label: awaiting_response
-        secrets: inherit
-
     open-docs-issue:
         name: Open docs issue
         # We only want to run this when the PR has been merged or the label in the labeled event is `user docs`.
@@ -38,7 +23,6 @@ jobs:
         # triggering this workflow to run and neither having generating the comment before the other runs.
         # This lives here instead of the shared workflow because this is where we decide if it should run or not.
         if: |
-            github.event == 'issues' &&
             github.event.issue.closed == true && (
                 (github.event.action == 'closed' && contains(github.event.issue.labels.*.name, 'user docs')) ||
                 (github.event.action == 'labeled' && github.event.label.name == 'user docs')
