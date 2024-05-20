@@ -74,7 +74,9 @@ jobs:
       name: ${{ inputs.deploy-to }}
       url: ${{ vars.PYPI_PROJECT_URL }}
     permissions:
-      id-token: write  # this permission is required for trusted publishing
+      # this permission is required for trusted publishing
+      # see https://github.com/marketplace/actions/pypi-publish
+      id-token: write
     steps:
       - name: "Publish to PyPI"
         uses: dbt-labs/dbt-adapters/.github/actions/publish-pypi@main
