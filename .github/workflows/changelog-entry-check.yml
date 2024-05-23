@@ -2,12 +2,12 @@ name: Changelog entry check
 
 on:
     pull_request:
-      types:
-      -   opened
-      -   reopened
-      -   labeled
-      -   unlabeled
-      -   synchronize
+        types:
+        -   opened
+        -   reopened
+        -   labeled
+        -   unlabeled
+        -   synchronize
 
 defaults:
     run:
