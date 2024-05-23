@@ -202,6 +202,7 @@ jobs:
 
   core-team:
     if: needs.release-inputs.outputs.changelog-exists == 'false'
+    needs: release-inputs
     uses: dbt-labs/actions/.github/workflows/determine-team-membership.yml@main
     with:
       github_team: "core-group"
