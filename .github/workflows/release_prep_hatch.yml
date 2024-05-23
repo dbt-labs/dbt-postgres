@@ -161,6 +161,27 @@ jobs:
           message="A changelog already exists at ${{ steps.changelog.outputs.path }}, skipping generating changelog"
           echo "::notice title=${{ env.NOTIFICATION_PREFIX }}: $title::$message"
 
+      - name: "[INFO] Perform changelog generation"
+        if: steps.changelog.outputs.exists == 'false'
+        run: |
+          title="Perform changelog generation"
+          message="A changelog does not exist at ${{ steps.changelog.outputs.path }}, this process will generate a changelog"
+          echo "::notice title=${{ env.NOTIFICATION_PREFIX }}: $title::$message"
+
+      - name: "[INFO] Skip changelog generation"
+        if: steps.changelog.outputs.exists == true
+        run: |
+          title="Skip changelog generation"
+          message="A changelog already exists at ${{ steps.changelog.outputs.path }}, skipping generating changelog"
+          echo "::notice title=${{ env.NOTIFICATION_PREFIX }}: $title::$message"
+
+      - name: "[INFO] Perform changelog generation"
+        if: steps.changelog.outputs.exists == false
+        run: |
+          title="Perform changelog generation"
+          message="A changelog does not exist at ${{ steps.changelog.outputs.path }}, this process will generate a changelog"
+          echo "::notice title=${{ env.NOTIFICATION_PREFIX }}: $title::$message"
+
   release-branch:
     runs-on: ubuntu-latest
     needs: release-inputs
