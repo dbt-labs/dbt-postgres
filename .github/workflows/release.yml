@@ -31,7 +31,7 @@ concurrency:
 jobs:
   release-prep:
     name: "Release prep: generate changelog, bump version"
-    uses: dbt-labs/dbt-postgres/.github/workflows/release_prep_hatch.yml@main
+    uses: dbt-labs/dbt-postgres/.github/workflows/release_prep_hatch.yml@fix-release-workflow
     with:
       branch: ${{ inputs.branch }}
       version: ${{ inputs.version }}
