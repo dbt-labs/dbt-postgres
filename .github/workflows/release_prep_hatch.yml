@@ -227,6 +227,7 @@ jobs:
     uses: dbt-labs/actions/.github/workflows/determine-team-membership.yml@main
     with:
       github_team: "core-group"
+    secrets: inherit
 
   generate-changelog:
     runs-on: ubuntu-latest
