@@ -126,7 +126,7 @@ jobs:
           then
             is_current=true
           fi
-          echo "is-current=$is_updated" >> $GITHUB_OUTPUT
+          echo "is-current=$is_current" >> $GITHUB_OUTPUT
 
       - name: "[INFO] Skip version bump"
         if: steps.version.outputs.is-current == 'true'
