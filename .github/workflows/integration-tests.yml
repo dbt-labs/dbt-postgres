@@ -114,18 +114,48 @@ jobs:
         uses: actions/checkout@v4
 
       - name: "Test psycopg2 name - default"
-        run: ./.github/scripts/check_psycopg2_install.sh
+        run: |
+          python -m pip install .
+          PSYCOPG2_PIP_ENTRY=$(pip list | grep "psycopg2 " || pip list | grep psycopg2-binary)
+
+          echo $PSYCOPG2_PIP_ENTRY
+          PSYCOPG2_NAME="${PSYCOPG2_PIP_ENTRY%% *}"
+          echo $PSYCOPG2_NAME
+
+          if [[ "${PSYCOPG2_NAME}" != "${PSYCOPG2_EXPECTED_NAME}" ]]; then
+            exit 1
+          fi
         env:
           PSYCOPG2_EXPECTED_NAME: psycopg2-binary
 
       - name: "Test psycopg2 name - override"
-        run: ./.github/scripts/check_psycopg2_install.sh
+        run: |
+          python -m pip install .
+          PSYCOPG2_PIP_ENTRY=$(pip list | grep "psycopg2 " || pip list | grep psycopg2-binary)
+
+          echo $PSYCOPG2_PIP_ENTRY
+          PSYCOPG2_NAME="${PSYCOPG2_PIP_ENTRY%% *}"
+          echo $PSYCOPG2_NAME
+
+          if [[ "${PSYCOPG2_NAME}" != "${PSYCOPG2_EXPECTED_NAME}" ]]; then
+            exit 1
+          fi
         env:
           DBT_PSYCOPG2_NAME: psycopg2
           PSYCOPG2_EXPECTED_NAME: psycopg2
 
       - name: "Test psycopg2 name - invalide override"
-        run: ./.github/scripts/check_psycopg2_install.sh
+        run: |
+          python -m pip install .
+          PSYCOPG2_PIP_ENTRY=$(pip list | grep "psycopg2 " || pip list | grep psycopg2-binary)
+
+          echo $PSYCOPG2_PIP_ENTRY
+          PSYCOPG2_NAME="${PSYCOPG2_PIP_ENTRY%% *}"
+          echo $PSYCOPG2_NAME
+
+          if [[ "${PSYCOPG2_NAME}" != "${PSYCOPG2_EXPECTED_NAME}" ]]; then
+            exit 1
+          fi
         env:
           DBT_PSYCOPG2_NAME: rubber-baby-buggy-bumpers
           PSYCOPG2_EXPECTED_NAME: psycopg2-binary
