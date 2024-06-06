@@ -113,11 +113,9 @@ jobs:
       - name: "Check out repository"
         uses: actions/checkout@v4
 
-      - name: Setup `hatch`
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
-
       - name: "Test psycopg2 name - default"
         run: |
+          pip install --upgrade --force-reinstall .
           PSYCOPG2_PIP_ENTRY=$(hatch run pip list | grep "psycopg2 " || hatch run pip list | grep psycopg2-binary)
 
           echo $PSYCOPG2_PIP_ENTRY
@@ -132,6 +130,7 @@ jobs:
 
       - name: "Test psycopg2 name - invalid override"
         run: |
+          pip install --upgrade --force-reinstall .
           PSYCOPG2_PIP_ENTRY=$(hatch run pip list | grep "psycopg2 " || hatch run pip list | grep psycopg2-binary)
 
           echo $PSYCOPG2_PIP_ENTRY
@@ -147,6 +146,7 @@ jobs:
 
       - name: "Test psycopg2 name - override"
         run: |
+          pip install --upgrade --force-reinstall .
           PSYCOPG2_PIP_ENTRY=$(hatch run pip list | grep "psycopg2 " || hatch run pip list | grep psycopg2-binary)
 
           echo $PSYCOPG2_PIP_ENTRY
