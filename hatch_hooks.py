@@ -1,6 +1,4 @@
 import os
-import subprocess
-import sys
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 from hatchling.plugin import hookimpl
@@ -14,7 +12,7 @@ class Psycopg2NoBinary(BuildHookInterface):
 
     PLUGIN_NAME = "psycopg2"
 
-    def finalize(self, version, build_data, artifact_path) -> None:
+    def initialize(self, version, build_data) -> None:
         if os.getenv("DBT_PSYCOPG2_NAME", "") == "psycopg2":
             psycopg2_binary_pinned = [
                 package
@@ -22,12 +20,7 @@ class Psycopg2NoBinary(BuildHookInterface):
                 if package.startswith("psycopg2-binary")
             ].pop()
             psycopg2_pinned = psycopg2_binary_pinned.replace("-binary", "")
-            subprocess.check_call(
-                [sys.executable, "-m", "pip", "-y", "uninstall", "psycopg2-binary"]
-            )
-            subprocess.check_call(
-                [sys.executable, "-m", "pip", "-y", "install", f'"{psycopg2_pinned}"']
-            )
+            build_data["dependencies"].append(psycopg2_pinned)
 
 
 @hookimpl
