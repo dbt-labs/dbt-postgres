@@ -130,7 +130,7 @@ jobs:
         env:
           PSYCOPG2_EXPECTED_NAME: psycopg2-binary
 
-      - name: "Test psycopg2 name - invalide override"
+      - name: "Test psycopg2 name - invalid override"
         run: |
           PSYCOPG2_PIP_ENTRY=$(hatch run pip list | grep "psycopg2 " || hatch run pip list | grep psycopg2-binary)
 
