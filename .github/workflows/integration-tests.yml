@@ -102,24 +102,30 @@ jobs:
 
   psycopg2-check:
     name: "Test psycopg2 build version"
-    runs-on: ${{ matrix.scenario.platform }}
+    runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
       matrix:
-        scenario:
-          - {platform: ubuntu-latest, psycopg2-name: psycopg2}
-          - {platform: macos-12, psycopg2-name: psycopg2-binary}
+        platform:
+          - ubuntu-24.04
+          - macos-12
     steps:
       - name: "Check out repository"
         uses: actions/checkout@v4
 
-      - name: "Test psycopg2 name"
-        run: |
-          python -m pip install .
-          PSYCOPG2_PIP_ENTRY=$(pip list | grep "psycopg2 " || pip list | grep psycopg2-binary)
-          echo $PSYCOPG2_PIP_ENTRY
-          PSYCOPG2_NAME="${PSYCOPG2_PIP_ENTRY%% *}"
-          echo $PSYCOPG2_NAME
-          if [[ "${PSYCOPG2_NAME}" != "${{ matrix.scenario.psycopg2-name }}" ]]; then
-            exit 1
-          fi
+      - name: "Test psycopg2 name - default"
+        run: ./.github/scripts/check_psycopg2_install.sh
+        env:
+          PSYCOPG2_EXPECTED_NAME: psycopg2-binary
+
+      - name: "Test psycopg2 name - override"
+        run: ./.github/scripts/check_psycopg2_install.sh
+        env:
+          DBT_PSYCOPG2_NAME: psycopg2
+          PSYCOPG2_EXPECTED_NAME: psycopg2
+
+      - name: "Test psycopg2 name - invalide override"
+        run: ./.github/scripts/check_psycopg2_install.sh
+        env:
+          DBT_PSYCOPG2_NAME: rubber-baby-buggy-bumpers
+          PSYCOPG2_EXPECTED_NAME: psycopg2-binary
