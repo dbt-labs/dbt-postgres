@@ -18,7 +18,7 @@ class Psycopg2NoBinary(BuildHookInterface):
                 package
                 for package in build_data["dependencies"]
                 if package.startswith("psycopg2-binary")
-            ]
+            ].pop()
             build_data["dependencies"].pop(psycopg2_binary_pinned)
             psycopg2_pinned = psycopg2_binary_pinned.replace("-binary", "")
             build_data["dependencies"].append(psycopg2_pinned)
