@@ -13,6 +13,7 @@ class Psycopg2NoBinary(BuildHookInterface):
     PLUGIN_NAME = "psycopg2"
 
     def initialize(self, version, build_data) -> None:
+        print(build_data)
         if os.getenv("DBT_PSYCOPG2_NAME", "") == "psycopg2":
             psycopg2_binary_pinned = [
                 package
