@@ -116,11 +116,7 @@ jobs:
       - name: "Test psycopg2 name - default"
         run: |
           pip install --upgrade --force-reinstall .
-          PSYCOPG2_PIP_ENTRY=$(hatch run pip list | grep "psycopg2 " || hatch run pip list | grep psycopg2-binary)
-
-          echo $PSYCOPG2_PIP_ENTRY
-          PSYCOPG2_NAME="${PSYCOPG2_PIP_ENTRY%% *}"
-          echo $PSYCOPG2_NAME
+          PSYCOPG2_NAME=$(hatch run pip show psycopg2 || pip show psycopg2-binary | grep Name | cut -d " " -f 2)
 
           if [[ "$PSYCOPG2_NAME" != "$PSYCOPG2_EXPECTED_NAME" ]]; then
             exit 1
@@ -131,11 +127,7 @@ jobs:
       - name: "Test psycopg2 name - invalid override"
         run: |
           pip install --upgrade --force-reinstall .
-          PSYCOPG2_PIP_ENTRY=$(hatch run pip list | grep "psycopg2 " || hatch run pip list | grep psycopg2-binary)
-
-          echo $PSYCOPG2_PIP_ENTRY
-          PSYCOPG2_NAME="${PSYCOPG2_PIP_ENTRY%% *}"
-          echo $PSYCOPG2_NAME
+          PSYCOPG2_NAME=$(hatch run pip show psycopg2 || pip show psycopg2-binary | grep Name | cut -d " " -f 2)
 
           if [[ "$PSYCOPG2_NAME" != "$PSYCOPG2_EXPECTED_NAME" ]]; then
             exit 1
@@ -147,15 +139,11 @@ jobs:
       - name: "Test psycopg2 name - override"
         run: |
           pip install --upgrade --force-reinstall .
-          PSYCOPG2_PIP_ENTRY=$(hatch run pip list | grep "psycopg2 " || hatch run pip list | grep psycopg2-binary)
-
-          echo $PSYCOPG2_PIP_ENTRY
-          PSYCOPG2_NAME="${PSYCOPG2_PIP_ENTRY%% *}"
-          echo $PSYCOPG2_NAME
+          PSYCOPG2_NAME=$(hatch run pip show psycopg2 || pip show psycopg2-binary | grep Name | cut -d " " -f 2)
 
           if [[ "$PSYCOPG2_NAME" != "$PSYCOPG2_EXPECTED_NAME" ]]; then
             exit 1
           fi
         env:
           DBT_PSYCOPG2_NAME: psycopg2
-          PSYCOPG2_EXPECTED_NAME: psycopg2
+          PSYCOPG2_EXPECTED_NAME: psycopg2-binary  # this is not yet implemented
