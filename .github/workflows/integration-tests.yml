@@ -115,7 +115,7 @@ jobs:
 
       - name: "Test psycopg2 name - default"
         run: |
-          pip install --upgrade --force-reinstall .
+          hatch env prune
           PSYCOPG2_NAME=$(hatch run pip show psycopg2 || pip show psycopg2-binary | grep Name | cut -d " " -f 2)
 
           if [[ "$PSYCOPG2_NAME" != "$PSYCOPG2_EXPECTED_NAME" ]]; then
@@ -126,7 +126,7 @@ jobs:
 
       - name: "Test psycopg2 name - invalid override"
         run: |
-          pip install --upgrade --force-reinstall .
+          hatch env prune
           PSYCOPG2_NAME=$(hatch run pip show psycopg2 || pip show psycopg2-binary | grep Name | cut -d " " -f 2)
 
           if [[ "$PSYCOPG2_NAME" != "$PSYCOPG2_EXPECTED_NAME" ]]; then
@@ -138,7 +138,7 @@ jobs:
 
       - name: "Test psycopg2 name - override"
         run: |
-          pip install --upgrade --force-reinstall .
+          hatch env prune
           PSYCOPG2_NAME=$(hatch run pip show psycopg2 || pip show psycopg2-binary | grep Name | cut -d " " -f 2)
 
           if [[ "$PSYCOPG2_NAME" != "$PSYCOPG2_EXPECTED_NAME" ]]; then
