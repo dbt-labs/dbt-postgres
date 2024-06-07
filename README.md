@@ -26,7 +26,7 @@ more information on using dbt with Postgres, consult [the docs](https://docs.get
 By default, `dbt-postgres` installs `psycopg2-binary`. This is great for development, and even testing, as it does not require any OS dependencies; it's a pre-built wheel. However, building `psycopg2` from source will grant performance improvements that are desired in a production environment. In order to install `psycopg2`, use the following steps:
 
 ```bash
-PSYCOPG2_VERSION = $(pip show psycopg2-binary | grep Version | cut -d " " -f 2)
+PSYCOPG2_VERSION=$(pip show psycopg2-binary | grep Version | cut -d " " -f 2)
 pip uninstall -y psycopg2-binary
 pip install psycopg2==$PSYCOPG2_VERSION
 ```
