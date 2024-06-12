@@ -120,7 +120,7 @@ jobs:
       - name: "Test psycopg2 name - default"
         run: |
           python -m venv venv
-          ./venv/bin/activate
+          source venv/bin/activate
           python -m pip install .
 
           PSYCOPG2_NAME=$((pip show psycopg2 || pip show psycopg2-binary) | grep Name | cut -d " " -f 2)
@@ -136,7 +136,7 @@ jobs:
       - name: "Test psycopg2 name - invalid override"
         run: |
           python -m venv venv
-          ./venv/bin/activate
+          source venv/bin/activate
           python -m pip install .
 
           PSYCOPG2_NAME=$((pip show psycopg2 || pip show psycopg2-binary) | grep Name | cut -d " " -f 2)
@@ -153,7 +153,7 @@ jobs:
       - name: "Test psycopg2 name - override"
         run: |
           python -m venv venv
-          ./venv/bin/activate
+          source venv/bin/activate
           python -m pip install .
 
           PSYCOPG2_NAME=$((hatch run pip show psycopg2 || hatch run pip show psycopg2-binary) | grep Name | cut -d " " -f 2)
@@ -170,7 +170,7 @@ jobs:
       - name: "Test psycopg2 name - manual override"
         run: |
           python -m venv venv
-          ./venv/bin/activate
+          source venv/bin/activate
           python -m pip install .
 
           # this is the work around
