@@ -150,7 +150,7 @@ jobs:
           fi
         env:
           DBT_PSYCOPG2_NAME: psycopg2
-          PSYCOPG2_EXPECTED_NAME: psycopg2-binary  # this is not yet implemented
+          PSYCOPG2_EXPECTED_NAME: psycopg2
 
       - name: "Test psycopg2 name - manual override"
         run: |
