@@ -112,8 +112,8 @@ jobs:
       - name: "Check out repository"
         uses: actions/checkout@v4
 
-      - name: Setup `hatch`
-        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
