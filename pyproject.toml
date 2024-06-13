@@ -43,9 +43,6 @@ Changelog = "https://github.com/dbt-labs/dbt-postgres/blob/main/CHANGELOG.md"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.hatch.build.hooks.custom]
-path = "hatch_build.py"
-
 [tool.hatch.build.targets.sdist]
 include = ["dbt", "scripts"]
 

@@ -165,7 +165,7 @@ jobs:
           rm -r ./venv
         env:
           DBT_PSYCOPG2_NAME: psycopg2
-          PSYCOPG2_EXPECTED_NAME: psycopg2
+          PSYCOPG2_EXPECTED_NAME: psycopg2-binary  # we have not implemented the hook yet, so this doesn't work
 
       - name: "Test psycopg2 name - manual override"
         run: |
