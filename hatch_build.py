@@ -1,4 +1,7 @@
+from importlib.metadata import version as get_version
 import os
+import subprocess
+from typing import Any, Dict
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 from hatchling.plugin import hookimpl
@@ -10,19 +13,11 @@ class Psycopg2BuildHook(BuildHookInterface):
     when configured via `DBT_PSYCOPG2_NAME=psycopg2`
     """
 
-    def initialize(self, version, build_data):
+    def finalize(self, version: str, build_data: Dict[str, Any], artifact_path: str) -> None:
         if os.getenv("DBT_PSYCOPG2_NAME") == "psycopg2":
-            psycopg2_binary = [
-                dep
-                for dep in self.metadata._core.config.get("dependencies")
-                if dep.startswith("psycopg2-binary")
-            ].pop()
-            if psycopg2_binary:
-                psycopg2_no_binary = psycopg2_binary.replace("-binary", "")
-                self.metadata._core.config["dependencies"].remove(psycopg2_binary)
-                self.metadata._core.config["dependencies"].append(psycopg2_no_binary)
-            else:
-                raise ImportError("`psycopg2-binary not found")
+            psycopg2_version = get_version("psycopg2-binary")
+            subprocess.run("pip", "uninstall", "-y", "psycopg2-binary")
+            subprocess.run("pip", "install", f"psycopg2=={psycopg2_version}")
 
 
 @hookimpl
