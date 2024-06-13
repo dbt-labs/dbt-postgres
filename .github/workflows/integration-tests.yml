@@ -129,7 +129,7 @@ jobs:
           fi
 
           deactivate
-          rmdir -r ./venv
+          rm -r ./venv
         env:
           PSYCOPG2_EXPECTED_NAME: psycopg2-binary
 
@@ -145,7 +145,7 @@ jobs:
           fi
 
           deactivate
-          rmdir -r ./venv
+          rm -r ./venv
         env:
           DBT_PSYCOPG2_NAME: rubber-baby-buggy-bumpers
           PSYCOPG2_EXPECTED_NAME: psycopg2-binary
@@ -162,7 +162,7 @@ jobs:
           fi
 
           deactivate
-          rmdir -r ./venv
+          rm -r ./venv
         env:
           DBT_PSYCOPG2_NAME: psycopg2
           PSYCOPG2_EXPECTED_NAME: psycopg2
@@ -185,6 +185,6 @@ jobs:
           fi
 
           deactivate
-          rmdir -r ./venv
+          rm -r ./venv
         env:
           PSYCOPG2_EXPECTED_NAME: psycopg2
