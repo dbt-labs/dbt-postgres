@@ -156,7 +156,7 @@ jobs:
           source venv/bin/activate
           python -m pip install .
 
-          PSYCOPG2_NAME=$((hatch run pip show psycopg2 || hatch run pip show psycopg2-binary) | grep Name | cut -d " " -f 2)
+          PSYCOPG2_NAME=$((pip show psycopg2 || pip show psycopg2-binary) | grep Name | cut -d " " -f 2)
           if [[ "$PSYCOPG2_NAME" != "$PSYCOPG2_EXPECTED_NAME" ]]; then
             exit 1
           fi
@@ -179,7 +179,7 @@ jobs:
           pip install psycopg2==$PSYCOPG2_VERSION
           # this is the end of the work around
 
-          PSYCOPG2_NAME=$((hatch run pip show psycopg2 || hatch run pip show psycopg2-binary) | grep Name | cut -d " " -f 2)
+          PSYCOPG2_NAME=$((pip show psycopg2 || pip show psycopg2-binary) | grep Name | cut -d " " -f 2)
           if [[ "$PSYCOPG2_NAME" != "$PSYCOPG2_EXPECTED_NAME" ]]; then
             exit 1
           fi
