@@ -118,25 +118,25 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: "Test psycopg2 name - default"
-        run: ./.github/scripts/psycopg2-check.sh
+        run: .github/scripts/psycopg2-check.sh
         env:
           PSYCOPG2_EXPECTED_NAME: psycopg2-binary
 
       - name: "Test psycopg2 name - invalid override"
-        run: ./.github/scripts/psycopg2-check.sh
+        run: .github/scripts/psycopg2-check.sh
         env:
           DBT_PSYCOPG2_NAME: rubber-baby-buggy-bumpers
           PSYCOPG2_EXPECTED_NAME: psycopg2-binary
 
       - name: "Test psycopg2 name - override"
-        run: ./.github/scripts/psycopg2-check.sh
+        run: .github/scripts/psycopg2-check.sh
         env:
           DBT_PSYCOPG2_NAME: psycopg2
           PSYCOPG2_EXPECTED_NAME: psycopg2-binary  # we have not implemented the hook yet, so this doesn't work
 
       - name: "Test psycopg2 name - manual override"
         # verify that the workaround documented in the `README.md` continues to work
-        run: ./.github/scripts/psycopg2-check.sh
+        run: .github/scripts/psycopg2-check.sh
         env:
           PSYCOPG2_WORKAROUND: true
           PSYCOPG2_EXPECTED_NAME: psycopg2
