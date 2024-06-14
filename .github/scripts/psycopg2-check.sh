@@ -10,7 +10,7 @@ fi
 
 PSYCOPG2_NAME=$(pip show --format=json | jq -r '.[] | select(.Name == "psycopg2" or .Name == "psycopg2-binary") | .name')
 if [[ "$PSYCOPG2_NAME" != "$PSYCOPG2_EXPECTED_NAME" ]]; then
-    echo -e "Expected: `$PSYCOPG2_EXPECTED_NAME` but found: `$PSYCOPG2_NAME`"
+    echo -e 'Expected: "$PSYCOPG2_EXPECTED_NAME" but found: "$PSYCOPG2_NAME"'
     exit 1
 fi
 
