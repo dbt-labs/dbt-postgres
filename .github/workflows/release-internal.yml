@@ -27,7 +27,7 @@ on:
       skip_tests:
         description: "Should the tests be skipped? (default to false)"
         type: boolean
-        required: false
+        required: true
         default: false
 
 defaults:
