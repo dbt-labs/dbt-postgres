@@ -14,11 +14,6 @@ name: "Release internal patch"
 
 on:
   workflow_dispatch:
-    inputs:
-      version_number:
-        description: "The release version number (i.e. 1.0.0b1)"
-        type: string
-        required: true
       ref:
         description: "The ref (sha or branch name) to use"
         type: string
@@ -41,7 +36,6 @@ jobs:
     uses: "dbt-labs/dbt-release/.github/workflows/internal-archive-release.yml@addPythonScriptComparison"
 
     with:
-      version_number: "${{ inputs.version_number }}"
       package_test_command: "${{ inputs.package_test_command }}"
       dbms_name: "postgres"
       ref: "${{ inputs.ref }}"
