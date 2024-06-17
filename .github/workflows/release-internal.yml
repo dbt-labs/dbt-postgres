@@ -24,6 +24,11 @@ on:
         type: string
         default: "python -c \"import dbt.adapters.postgres\""
         required: true
+      skip_tests:
+        description: "Should the tests be skipped? (default to false)"
+        type: boolean
+        required: false
+        default: false
 
 defaults:
   run:
@@ -39,5 +44,6 @@ jobs:
       package_test_command: "${{ inputs.package_test_command }}"
       dbms_name: "postgres"
       ref: "${{ inputs.ref }}"
+      skip_tests: "${{ inputs.skip_tests }}"
 
     secrets: "inherit"
