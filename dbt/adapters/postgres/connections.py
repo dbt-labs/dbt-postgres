@@ -148,7 +148,7 @@ class PostgresConnectionManager(SQLConnectionManager):
                     password=credentials.password,
                     port=credentials.port,
                     connect_timeout=credentials.connect_timeout,
-                    **kwargs
+                    **kwargs,
                 )
 
             if rec_mode is not None:
