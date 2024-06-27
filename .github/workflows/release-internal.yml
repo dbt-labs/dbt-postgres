@@ -31,6 +31,10 @@ on:
         required: true
         default: false
 
+permissions:
+  id-token: write
+  contents: read
+
 defaults:
   run:
     shell: "bash"
