@@ -31,10 +31,6 @@ on:
         required: true
         default: false
 
-permissions:
-  id-token: write
-  contents: read
-
 defaults:
   run:
     shell: "bash"
@@ -50,5 +46,9 @@ jobs:
       dbms_name: "postgres"
       ref: "${{ inputs.ref }}"
       skip_tests: "${{ inputs.skip_tests }}"
+
+    permissions:
+      id-token: write
+      contents: read
 
     secrets: "inherit"
