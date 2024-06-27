@@ -39,7 +39,7 @@ jobs:
   invoke-reusable-workflow:
     name: "Build and Release Internally"
 
-    uses: "dbt-labs/dbt-release/.github/workflows/internal-archive-release.yml@main"
+    uses: "dbt-labs/dbt-release/.github/workflows/internal-archive-release.yml@update_security_for_internal_release"
 
     with:
       package_test_command: "${{ inputs.package_test_command }}"
