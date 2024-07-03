@@ -22,14 +22,9 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
 ]
-
-[tool.hatch.metadata]
-allow-direct-references = true
-
-
 dependencies = [
     "psycopg2-binary>=2.9,<3.0",
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@ADAP-207/get_show_sql_has_no_wrapping",
+    "dbt-adapters>=0.1.0a1,<2.0",
     # add dbt-core to ensure backwards compatibility of installation, this is not a functional dependency
     "dbt-core>=1.8.0a1",
     # installed via dbt-adapters but used directly
@@ -59,8 +54,7 @@ path = "dbt/adapters/postgres/__version__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
-    "psycopg2-binary>=2.9,<3.0",
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@ADAP-207/get_show_sql_has_no_wrapping",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
     'pre-commit==3.7.0;python_version>="3.9"',
     'pre-commit==3.5.0;python_version=="3.8"',
@@ -77,8 +71,7 @@ docker-prod = "docker build -f docker/Dockerfile -t dbt-postgres ."
 
 [tool.hatch.envs.unit-tests]
 dependencies = [
-    "psycopg2-binary>=2.9,<3.0",
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@ADAP-207/get_show_sql_has_no_wrapping",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
     "dbt-core @ git+https://github.com/dbt-labs/dbt-core.git#subdirectory=core",
     "freezegun",
@@ -93,7 +86,7 @@ all = "python -m pytest {args:tests/unit}"
 [tool.hatch.envs.integration-tests]
 template = "unit-tests"
 extra-dependencies = [
-    "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git@ADAP-207/get_show_sql_has_no_wrapping#subdirectory=dbt-tests-adapter",
+    "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git#subdirectory=dbt-tests-adapter",
 ]
 [tool.hatch.envs.integration-tests.env-vars]
 DBT_TEST_USER_1 = "dbt_test_user_1"
