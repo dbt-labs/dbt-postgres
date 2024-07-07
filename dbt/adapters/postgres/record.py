@@ -6,7 +6,6 @@ from dbt_common.record import record_function, Record, Recorder
 
 
 class PostgresRecordReplayHandle(RecordReplayHandle):
-    # PAW: Wrap
     def cursor(self):
         cursor = None if self.native_handle is None else self.native_handle.cursor()
         return PostgresRecordReplayCursor(cursor, self.connection)
@@ -22,12 +21,11 @@ class CursorGetStatusMessageResult:
     msg: Optional[str]
 
 
+@Recorder.register_record_type
 class CursorGetStatusMessageRecord(Record):
     params_cls = CursorGetStatusMessageParams
     result_cls = CursorGetStatusMessageResult
-
-
-Recorder.register_record_type(CursorGetStatusMessageRecord)
+    group = "Database"
 
 
 class PostgresRecordReplayCursor(RecordReplayCursor):
