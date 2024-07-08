@@ -42,6 +42,7 @@ class TestPersistDocsWithMaterializedView(BasePersistDocs):
     @pytest.fixture(scope="class", autouse=True)
     def seeds(self):
         return {"my_seed.csv": files.MY_SEED}
+
     @pytest.fixture(scope="class")
     def models(self):
         return {
@@ -62,4 +63,3 @@ class TestPersistDocsWithMaterializedView(BasePersistDocs):
         assert len(catalog_data["nodes"]) == 2
         view_node = catalog_data["nodes"]["model.test.my_materialized_view"]
         assert view_node["metadata"]["comment"].startswith("Materialized view model description")
-
