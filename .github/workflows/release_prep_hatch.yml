@@ -342,7 +342,7 @@ jobs:
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
 
       - name: "Run unit tests"
-        run: hatch run unit-tests:all
+        run: hatch run unit-tests
 
   integration-tests:
     runs-on: ubuntu-latest
@@ -387,7 +387,7 @@ jobs:
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
 
       - name: "Run integration tests"
-        run: hatch run integration-tests:all
+        run: hatch run integration-tests
         env:
           POSTGRES_TEST_HOST: localhost
           POSTGRES_TEST_PORT: 5432
