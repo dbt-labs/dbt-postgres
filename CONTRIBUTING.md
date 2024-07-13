@@ -68,12 +68,24 @@ Rather than forking `dbt-labs/dbt-postgres`, use `dbt-labs/dbt-postgres` directl
 
 1. Ensure the latest versions of `pip` and `hatch` are installed:
    ```shell
-   pip install --upgrade pip hatch
+   pip install --user --upgrade pip hatch
    ```
-2. Create a `hatch` environment with all of the development dependencies and activate it:
+2. This step is optional, but it's recommended. Configure `hatch` to create its virtual environments in the project. Add this block to your `hatch` `config.toml` file:
+   ```toml
+   # MacOS: ~/Library/Application Support/hatch/config.toml
+   [dirs.env]
+   virtual = ".hatch"
+   ```
+   This makes `hatch` create all virtual environments in the project root inside of the directory `/.hatch`, similar to `/.tox` for `tox`.
+   It also makes it easier to add this environment as a runner in common IDEs like VSCode and PyCharm.
+3. Create a `hatch` environment with all of the development dependencies and activate it:
    ```shell
    hatch run setup
    hatch shell
+   ```
+4. Run any commands within the virtual environment by prefixing the command with `hatch run`:
+   ```shell
+   hatch run <command>
    ```
 
 When `dbt-postgres` is installed this way, any changes made to the `dbt-postgres` source code
@@ -81,9 +93,15 @@ will be reflected in the virtual environment immediately.
 
 ## Testing
 
-`dbt-postgres` contains [unit](https://github.com/dbt-labs/dbt-postgres/tree/main/tests/unit)
-and [functional](https://github.com/dbt-labs/dbt-postgres/tree/main/tests/functional) tests.
+`dbt-postgres` contains [code quality checks](https://github.com/dbt-labs/dbt-postgres/tree/main/.pre-commit-config.yaml), [unit tests](https://github.com/dbt-labs/dbt-postgres/tree/main/tests/unit),
+and [functional tests](https://github.com/dbt-labs/dbt-postgres/tree/main/tests/functional).
 
+### Code quality
+
+Code quality checks can run with a single command:
+```shell
+hatch run code-quality
+```
 
 ### Unit tests
 
@@ -92,8 +110,12 @@ Unit tests can be run locally without setting up a database connection:
 ```shell
 # Note: replace $strings with valid names
 
+# run all unit tests
+hatch run unit-test
+
 # run all unit tests in a module
 hatch run unit-tests tests/unit/$test_file_name.py
+
 # run a specific unit test
 hatch run unit-tests tests/unit/$test_file_name.py::$test_class_name::$test_method_name
 ```
@@ -132,6 +154,21 @@ hatch run integration-tests tests/functional/$test_directory/$test_filename.py::
 
 # run a specific functional test
 hatch run integration-tests tests/functional/$test_directory/$test_filename.py::$test_class_name::$test__method_name
+```
+
+### Testing against a development branch
+
+Some changes require a change in `dbt-common` and/or `dbt-adapters`.
+In that case, the dependency on `dbt-common` and/or `dbt-adapters` must be updated to point to the development branch. For example:
+
+```toml
+[tool.hatch.envs.default]
+dependencies = [
+    "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git@my-dev-branch",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@my-dev-branch",
+    "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git@my-dev-branch#subdirectory=dbt-tests-adapter",
+    ...,
+]
 ```
 
 ## Documentation
