@@ -66,20 +66,17 @@ Rather than forking `dbt-labs/dbt-postgres`, use `dbt-labs/dbt-postgres` directl
 
 ### Installation
 
-1. Ensure the latest version of `pip` is installed:
+1. Ensure the latest versions of `pip` and `hatch` are installed:
    ```shell
-   pip install --upgrade pip
+   pip install --upgrade pip hatch
    ```
-2. Configure and activate a virtual environment using `virtualenv` as described in
-[Setting up an environment](https://github.com/dbt-labs/dbt-core/blob/HEAD/CONTRIBUTING.md#setting-up-an-environment)
-3. Install `dbt-postgres` and development dependencies in the virtual environment
+2. Create a `hatch` environment with all of the development dependencies and activate it:
    ```shell
-   pip install -e .[dev]
+   hatch shell
    ```
 
 When `dbt-postgres` is installed this way, any changes made to the `dbt-postgres` source code
 will be reflected in the virtual environment immediately.
-
 
 ## Testing
 
@@ -95,9 +92,9 @@ Unit tests can be run locally without setting up a database connection:
 # Note: replace $strings with valid names
 
 # run all unit tests in a module
-python -m pytest tests/unit/$test_file_name.py
+hatch run unit-tests tests/unit/$test_file_name.py
 # run a specific unit test
-python -m pytest tests/unit/$test_file_name.py::$test_class_name::$test_method_name
+hatch run unit-tests tests/unit/$test_file_name.py::$test_class_name::$test_method_name
 ```
 
 ### Functional tests
@@ -120,16 +117,21 @@ Functional tests can be run locally with a valid database connection configured 
 ```shell
 # Note: replace $strings with valid names
 
-# run all functional tests in a directory
-python -m pytest tests/functional/$test_directory
-# run all functional tests in a module
-python -m pytest tests/functional/$test_dir_and_filename.py
-# run all functional tests in a class
-python -m pytest tests/functional/$test_dir_and_filename.py::$test_class_name
-# run a specific functional test
-python -m pytest tests/functional/$test_dir_and_filename.py::$test_class_name::$test__method_name
-```
+# run all functional tests
+hatch run integration-tests
 
+# run all functional tests in a directory
+hatch run integration-tests tests/functional/$test_directory
+
+# run all functional tests in a module
+hatch run integration-tests tests/functional/$test_directory/$test_filename.py
+
+# run all functional tests in a class
+hatch run integration-tests tests/functional/$test_directory/$test_filename.py::$test_class_name
+
+# run a specific functional test
+hatch run integration-tests tests/functional/$test_directory/$test_filename.py::$test_class_name::$test__method_name
+```
 
 ## Documentation
 
