@@ -72,6 +72,7 @@ Rather than forking `dbt-labs/dbt-postgres`, use `dbt-labs/dbt-postgres` directl
    ```
 2. Create a `hatch` environment with all of the development dependencies and activate it:
    ```shell
+   hatch run setup
    hatch shell
    ```
 
