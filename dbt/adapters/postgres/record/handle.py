@@ -2,6 +2,7 @@ from dbt.adapters.record import RecordReplayHandle
 
 from dbt.adapters.postgres.record.cursor.cursor import PostgresRecordReplayCursor
 
+
 class PostgresRecordReplayHandle(RecordReplayHandle):
     """A custom extension of RecordReplayHandle that returns
     a psycopg-specific PostgresRecordReplayCursor object."""

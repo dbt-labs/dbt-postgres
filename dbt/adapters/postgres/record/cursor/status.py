@@ -3,6 +3,7 @@ from typing import Optional
 
 from dbt_common.record import Record, Recorder
 
+
 @dataclasses.dataclass
 class CursorGetStatusMessageParams:
     connection_name: str
