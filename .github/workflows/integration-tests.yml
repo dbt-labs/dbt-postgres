@@ -1,5 +1,7 @@
 name: Integration Tests
 
+run-name: ${{ inputs.name }} by @${{ github.actor }}
+
 on:
   push:
     branches:
@@ -13,11 +15,16 @@ on:
         type: string
         required: false
         default: "main"
-      core_branch:
+      dbt_core_branch:
         description: "The branch of dbt-core to use"
         type: string
         required: false
         default: "main"
+      name:
+        description: "name to associate with run"
+        required: false
+        type: string
+        default: "Adapter Integration Tests"
   workflow_call:
     inputs:
       dbt_adapters_branch:
@@ -25,11 +32,16 @@ on:
         type: string
         required: false
         default: "main"
-      core_branch:
+      dbt_core_branch:
         description: "The branch of dbt-core to use"
         type: string
         required: false
         default: "main"
+      name:
+        description: "name to associate with run"
+        required: false
+        type: string
+        default: "Adapter Integration Tests"
 
 permissions: read-all
 
@@ -74,7 +86,7 @@ jobs:
         run: |
           ./.github/scripts/update_dev_packages.sh \
             ${{ inputs.dbt_adapters_branch }} \
-            ${{ inputs.core_branch }}
+            ${{ inputs.dbt_core_branch }}
 
       - name: Setup postgres
         run: psql -f ./scripts/setup_test_database.sql
