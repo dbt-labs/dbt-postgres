@@ -27,7 +27,7 @@ classifiers = [
 allow-direct-references = true
 dependencies = [
     "psycopg2-binary>=2.9,<3.0",
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git @ ADAP-821/support_for_redshift_821",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@ADAP-821/support_for_redshift_821",
     # add dbt-core to ensure backwards compatibility of installation, this is not a functional dependency
     "dbt-core>=1.8.0",
     # installed via dbt-adapters but used directly
@@ -56,7 +56,7 @@ path = "dbt/adapters/postgres/__version__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git @ ADAP-821/support_for_redshift_821",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@ADAP-821/support_for_redshift_821",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
     "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git#subdirectory=dbt-tests-adapter",
     "dbt-core @ git+https://github.com/dbt-labs/dbt-core.git#subdirectory=core",
