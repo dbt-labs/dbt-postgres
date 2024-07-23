@@ -35,6 +35,30 @@ fi
 
 This ensures the version of `psycopg2` will match that of `psycopg2-binary`.
 
+
+## Running Tests
+
+To run initial setup
+
+* `hatch run setup`
+
+To run all unit tests
+
+* `hatch run unit-tests`
+
+To run all integration tests
+
+* `hatch run integration-tests`
+
+To reset your environment and force dependency updates
+
+* `hatch env prune`
+
+To manually alter the packages in your environment
+
+* `hatch shell`
+* `pip install ...`
+
 ## Join the dbt Community
 
 - Be part of the conversation in the [dbt Community Slack](http://community.getdbt.com/)
