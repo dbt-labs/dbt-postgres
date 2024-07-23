@@ -36,9 +36,9 @@ fi
 This ensures the version of `psycopg2` will match that of `psycopg2-binary`.
 
 
-## Running Tests
+## Contribute
 
-We use `hatch` to facilitate testing. See `CONTRIBUTING.md` for a detailed explanation.
+See `CONTRIBUTING.md` for a detailed overview of contributing a code change to this adapter.
 
 ## Join the dbt Community
 
