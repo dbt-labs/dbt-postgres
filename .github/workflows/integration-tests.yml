@@ -104,6 +104,7 @@ jobs:
           ./.github/scripts/update_dev_packages.sh \
             ${{ inputs.dbt_adapters_branch }} \
             ${{ inputs.dbt_core_branch }}
+          cat pyproject.toml 
 
       - name: Setup postgres
         run: psql -f ./scripts/setup_test_database.sql
