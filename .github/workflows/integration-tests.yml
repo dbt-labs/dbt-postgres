@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       name:
-        description: "name to associate with run"
+        description: "Name to associate with run (example: 'dbt-adapters-242')"
         required: false
         type: string
         default: "Adapter Integration Tests"
