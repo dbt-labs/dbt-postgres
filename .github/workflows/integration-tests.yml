@@ -115,7 +115,7 @@ jobs:
             ${{ inputs.dbt_adapters_branch }} \
             ${{ inputs.dbt_core_branch }} \
             ${{ inputs.dbt_common_branch }}
-          cat pyproject.toml 
+          cat pyproject.toml
 
       - name: Setup postgres
         run: psql -f ./scripts/setup_test_database.sql
