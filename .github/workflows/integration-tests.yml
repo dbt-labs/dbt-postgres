@@ -99,7 +99,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        if: github.event_name != 'workflow_dispatch' && github.event_name != 'workflow_call'
+        if: github.event_name == 'pull_request'|| github.event_name == 'push'
         uses: actions/checkout@v4
 
       - name: Check out the repository (workflow_dispatch)
