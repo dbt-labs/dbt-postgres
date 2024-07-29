@@ -10,16 +10,6 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      dbt_adapters_branch:
-        description: "The branch of dbt-adapters to use"
-        type: string
-        required: false
-        default: "main"
-      dbt_core_branch:
-        description: "The branch of dbt-core to use"
-        type: string
-        required: false
-        default: "main"
       name:
         description: "name to associate with run"
         required: false
@@ -30,18 +20,23 @@ on:
         type: string
         required: false
         default: main
+      dbt_adapters_branch:
+        description: "The branch of dbt-adapters to use"
+        type: string
+        required: false
+        default: "main"
+      dbt_core_branch:
+        description: "The branch of dbt-core to use"
+        type: string
+        required: false
+        default: "main"
+      dbt_common_branch:
+        description: "The branch of dbt-common to use"
+        type: string
+        required: false
+        default: "main"
   workflow_call:
     inputs:
-      dbt_adapters_branch:
-        description: "The branch of dbt-adapters to use"
-        type: string
-        required: false
-        default: "main"
-      dbt_core_branch:
-        description: "The branch of dbt-core to use"
-        type: string
-        required: false
-        default: "main"
       name:
         description: "name to associate with run"
         required: false
@@ -52,6 +47,21 @@ on:
         type: string
         required: false
         default: main
+      dbt_adapters_branch:
+        description: "The branch of dbt-adapters to use"
+        type: string
+        required: false
+        default: "main"
+      dbt_core_branch:
+        description: "The branch of dbt-core to use"
+        type: string
+        required: false
+        default: "main"
+      dbt_common_branch:
+        description: "The branch of dbt-common to use"
+        type: string
+        required: false
+        default: "main"
 
 permissions: read-all
 
