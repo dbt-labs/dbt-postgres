@@ -17,8 +17,8 @@ on:
   workflow_dispatch:
     inputs:
       version_number:
-       description: 'The version number to bump to (ex. 1.2.0, 1.3.0b1)'
-       required: true
+        description: 'The version number to bump to (ex. 1.2.0, 1.3.0b1)'
+        required: true
 
 jobs:
   version_bump_and_changie:
