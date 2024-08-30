@@ -31,7 +31,9 @@
 #  1. Bump the version if it has not been bumped
 #  2. Generate the changelog (via changie) if there is no markdown file for this version
 name: "Release prep"
-run-name: "Release prep: Generate changelog and bump to ${{ inputs.version }} for release to ${{ inputs.deploy-to }}"
+run-name: "Release prep: Generate changelog and bump to ${{ inputs.version }} for\
+  \ release to ${{ inputs.deploy-to }}"
+
 on:
   workflow_call:
     inputs:
@@ -59,7 +61,8 @@ on:
         description: "The SHA to be released"
         value: ${{ jobs.release.outputs.sha }}
       changelog-path:
-        description: "The path to the changelog from the repo root for this version, e.g. .changes/1.8.0-b1.md"
+        description: "The path to the changelog from the repo root for this version,\
+          \ e.g. .changes/1.8.0-b1.md"
         value: ${{ jobs.release-inputs.outputs.changelog-path }}
     secrets:
       FISHTOWN_BOT_PAT:
@@ -165,8 +168,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: release-inputs
     if: |
-        needs.release-inputs.outputs.changelog-exists == 'false' ||
-        needs.release-inputs.outputs.version-is-current == 'false'
+      needs.release-inputs.outputs.changelog-exists == 'false' ||
+      needs.release-inputs.outputs.version-is-current == 'false'
     outputs:
       name: ${{ steps.release-branch.outputs.name }}
 
@@ -218,7 +221,8 @@ jobs:
       - core-team
 
     steps:
-      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name\
+          \ }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.release-branch.outputs.name }}
@@ -243,7 +247,7 @@ jobs:
             changie batch ${{ needs.release-inputs.outputs.base-version }} \
               --include '${{ needs.release-inputs.outputs.base-version }}' \
               --remove-prereleases
-          else # releasing a final patch with no pre-releases
+          else  # releasing a final patch with no pre-releases
             changie batch ${{ needs.release-inputs.outputs.base-version }}
           fi
           changie merge
@@ -291,7 +295,8 @@ jobs:
       - generate-changelog
 
     steps:
-      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name\
+          \ }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.release-branch.outputs.name }}
@@ -333,7 +338,8 @@ jobs:
       - bump-version
 
     steps:
-      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name\
+          \ }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.release-branch.outputs.name }}
@@ -369,7 +375,8 @@ jobs:
           - 5432:5432
 
     steps:
-      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-branch.outputs.name\
+          \ }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.release-branch.outputs.name }}
@@ -404,9 +411,9 @@ jobs:
       - release-branch
       - release-inputs
     if: |
-        !failure() && !cancelled() &&
-        needs.release-branch.result == 'success' &&
-        inputs.deploy-to == 'prod'
+      !failure() && !cancelled() &&
+      needs.release-branch.result == 'success' &&
+      inputs.deploy-to == 'prod'
 
     steps:
       - name: "Checkout ${{ github.event.repository.name }}"
@@ -418,7 +425,8 @@ jobs:
           source_ref: ${{ needs.release-branch.outputs.name }}
           target_branch: ${{ inputs.branch }}
           github_token: ${{ secrets.FISHTOWN_BOT_PAT }}
-          commit_message_template: "[Automated] Merged {source_ref} into target {target_branch} during release process"
+          commit_message_template: "[Automated] Merged {source_ref} into target {target_branch}\
+            \ during release process"
 
       - name: "[INFO] Merge changes into ${{ inputs.branch }}"
         run: |
@@ -454,7 +462,8 @@ jobs:
           fi
           echo "name=$branch" >> $GITHUB_OUTPUT
 
-      - name: "Checkout ${{ github.event.repository.name }}@${{ steps.branch.outputs.name }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ steps.branch.outputs.name\
+          \ }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ steps.branch.outputs.name }}

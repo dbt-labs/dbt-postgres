@@ -25,11 +25,12 @@ on:
         default: "3.12"
 
 permissions:
-  contents: write # this is the permission that allows creating a new release
+  contents: write  # this is the permission that allows creating a new release
 
 # will cancel previous workflows triggered by the same event and for the same ref for PRs or same SHA otherwise
 concurrency:
-  group: "${{ github.workflow }}-${{ github.event_name }}-${{ inputs.version }}-${{ inputs.deploy-to }}"
+  group: "${{ github.workflow }}-${{ github.event_name }}-${{ inputs.version }}-${{\
+    \ inputs.deploy-to }}"
   cancel-in-progress: true
 
 jobs:
@@ -49,7 +50,8 @@ jobs:
     outputs:
       archive-name: ${{ steps.archive.outputs.name }}
     steps:
-      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-prep.outputs.release-branch }}"
+      - name: "Checkout ${{ github.event.repository.name }}@${{ needs.release-prep.outputs.release-branch\
+          \ }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.release-prep.outputs.release-branch }}
