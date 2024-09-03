@@ -54,10 +54,10 @@ path = "dbt/adapters/postgres/__version__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
+    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@snapshot_column_names",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
     "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git#subdirectory=dbt-tests-adapter",
-    "dbt-core @ git+https://github.com/dbt-labs/dbt-core.git#subdirectory=core",
+    "dbt-core @ git+https://github.com/dbt-labs/dbt-core.git@snapshot_column_names#subdirectory=core",
     'pre-commit==3.7.0;python_version>="3.9"',
     'pre-commit==3.5.0;python_version=="3.8"',
     "freezegun",
