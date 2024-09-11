@@ -9,7 +9,7 @@
 {% endmacro %}
 
 
-{% macro get_incremental_microbatch_sql(arg_dict) %}
+{% macro postgres__get_incremental_microbatch_sql(arg_dict) %}
 
   {% if arg_dict["unique_key"] %}
     {% do return(adapter.dispatch('get_incremental_merge_sql', 'dbt')(arg_dict)) %}
