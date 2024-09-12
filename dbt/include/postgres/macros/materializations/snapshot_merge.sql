@@ -2,15 +2,14 @@
 {% macro postgres__snapshot_merge_sql(target, source, insert_cols) -%}
     {%- set insert_cols_csv = insert_cols | join(', ') -%}
 
-    {%- set dbt_scd_id = config.get("dbt_scd_id_column_name") or "dbt_scd_id" -%}
-    {%- set dbt_valid_to = config.get("dbt_valid_to_column_name") or "dbt_valid_to" -%}
+    {%- set stcn = config.get("snapshot_table_column_names") or get_snapshot_table_column_names() -%}
 
     update {{ target }}
-    set {{ dbt_valid_to }} = DBT_INTERNAL_SOURCE.{{ dbt_valid_to }}
+    set {{ stcn.dbt_valid_to }} = DBT_INTERNAL_SOURCE.{{ stcn.dbt_valid_to }}
     from {{ source }} as DBT_INTERNAL_SOURCE
-    where DBT_INTERNAL_SOURCE.{{ dbt_scd_id }}::text = {{ target }}.{{ dbt_scd_id }}::text
+    where DBT_INTERNAL_SOURCE.{{ stcn.dbt_scd_id }}::text = {{ target }}.{{ stcn.dbt_scd_id }}::text
       and DBT_INTERNAL_SOURCE.dbt_change_type::text in ('update'::text, 'delete'::text)
-      and {{ target }}.{{ dbt_valid_to }} is null;
+      and {{ target }}.{{ stcn.dbt_valid_to }} is null;
 
     insert into {{ target }} ({{ insert_cols_csv }})
     select {% for column in insert_cols -%}
