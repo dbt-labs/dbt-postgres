@@ -10,7 +10,7 @@
     where DBT_INTERNAL_SOURCE.{{ columns.dbt_scd_id }}::text = {{ target }}.{{ columns.dbt_scd_id }}::text
       and DBT_INTERNAL_SOURCE.dbt_change_type::text in ('update'::text, 'delete'::text)
       {% if config.get("dbt_valid_to_current") %}
-        and {{ target }}.{{ columns.dbt_valid_to }} = {{ config.get('dbt_valid_to_current') }};
+        and ({{ target }}.{{ columns.dbt_valid_to }} = {{ config.get('dbt_valid_to_current') }} or {{ target }}.{{ columns.dbt_valid_to }} is null);
       {% else %}
         and {{ target }}.{{ columns.dbt_valid_to }} is null;
       {% endif %}
