@@ -165,8 +165,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: release-inputs
     if: |
-        needs.release-inputs.outputs.changelog-exists == 'false' ||
-        needs.release-inputs.outputs.version-is-current == 'false'
+      needs.release-inputs.outputs.changelog-exists == 'false' ||
+      needs.release-inputs.outputs.version-is-current == 'false'
     outputs:
       name: ${{ steps.release-branch.outputs.name }}
 
@@ -404,9 +404,9 @@ jobs:
       - release-branch
       - release-inputs
     if: |
-        !failure() && !cancelled() &&
-        needs.release-branch.result == 'success' &&
-        inputs.deploy-to == 'prod'
+      !failure() && !cancelled() &&
+      needs.release-branch.result == 'success' &&
+      inputs.deploy-to == 'prod'
 
     steps:
       - name: "Checkout ${{ github.event.repository.name }}"
