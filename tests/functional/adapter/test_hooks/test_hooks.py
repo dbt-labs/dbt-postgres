@@ -77,5 +77,10 @@ class TestPrePostRunHooks(BasePrePostRunHooks):
     pass
 
 
+from dbt.tests.util import run_dbt
+
+
 class TestAfterRunHooks(BaseAfterRunHooks):
-    pass
+
+    def test_missing_column_pre_hook(self, project):
+        run_dbt(["run"], expect_pass=False)
