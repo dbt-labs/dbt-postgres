@@ -20,7 +20,7 @@ If you need to use a different version you can specify it by git ref using the `
 docker build --tag <your_image_name> \
   --target dbt-postgres \
   --build-arg commit_ref=<commit_ref> \
-  .
+  <path/to/dockerfile>
 ```
 
 ### Examples:
