@@ -23,7 +23,8 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 dependencies = [
-    "psycopg2-binary>=2.9,<3.0",
+    "psycopg2-binary>=2.9,<3.0; python_version > '3.8'",
+    "psycopg2-binary>=2.9.0,<2.9.10; python_version <= '3.8'",
     "dbt-adapters>=0.1.0a1,<2.0",
     # add dbt-core to ensure backwards compatibility of installation, this is not a functional dependency
     "dbt-core>=1.8.0a1",
