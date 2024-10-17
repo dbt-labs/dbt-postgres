@@ -4,7 +4,7 @@ name = "dbt-postgres"
 description = "The set of adapter protocols and base functionality that supports integration with dbt-core"
 readme = "README.md"
 keywords = ["dbt", "adapter", "adapters", "database", "elt", "dbt-core", "dbt Core", "dbt Cloud", "dbt Labs", "postgres"]
-requires-python = ">=3.8.0"
+requires-python = ">=3.9.0"
 authors = [
     { name = "dbt Labs", email = "info@dbtlabs.com" },
 ]
@@ -17,7 +17,6 @@ classifiers = [
     "Operating System :: MacOS :: MacOS X",
     "Operating System :: Microsoft :: Windows",
     "Operating System :: POSIX :: Linux",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -56,8 +55,7 @@ path = "dbt/adapters/postgres/__version__.py"
 dependencies = [
     "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
-    'pre-commit==3.7.0;python_version>="3.9"',
-    'pre-commit==3.5.0;python_version=="3.8"',
+    "pre-commit==3.7.0",
 ]
 [tool.hatch.envs.default.scripts]
 dev = "pre-commit install"
