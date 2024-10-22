@@ -1,11 +1,12 @@
 from dbt.tests.adapter.incremental.test_incremental_microbatch import (
     BaseTestMicrobatchOn,
-    BaseTestMicrobatchOff
+    BaseTestMicrobatchOff,
 )
 
 
 class TestPostgresMicrobatchOn(BaseTestMicrobatchOn):
     pass
+
 
 class TestPostgresMicrobatchOff(BaseTestMicrobatchOff):
     pass
