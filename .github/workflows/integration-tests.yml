@@ -158,6 +158,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: "Install postgresql on MacOS"
+        if: ${{ matrix.platform == 'macos-14' }}
+        run: |
+          brew install postgresql
+
       - name: "Test psycopg2 name - default"
         run: .github/scripts/psycopg2-check.sh
         env:
