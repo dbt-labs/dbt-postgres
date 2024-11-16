@@ -1,0 +1,25 @@
+name: "Publish Internally"
+
+on:
+    workflow_dispatch:
+        inputs:
+            deploy-to:
+                description: "Choose whether to publish to test or prod"
+                type: string
+                default: "test"
+            branch:
+                description: "Choose the branch to publish"
+                type: string
+                default: "main"
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    publish-internal:
+        uses: dbt-labs/dbt-adapters/.github/workflows/_publish-internal.yml@monorepo-prep
+        with:
+            package: "dbt-postgres"
+            deploy-to: ${{ inputs.deploy-to }}
+            branch: ${{ inputs.branch }}
