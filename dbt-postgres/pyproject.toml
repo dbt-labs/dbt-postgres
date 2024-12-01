@@ -51,7 +51,7 @@ packages = ["src/dbt/adapters", "src/dbt/include"]
 sources = ["src"]
 
 [tool.hatch.version]
-path = "dbt/adapters/postgres/__version__.py"
+path = "src/dbt/adapters/postgres/__version__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
