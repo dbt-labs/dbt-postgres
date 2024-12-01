@@ -32,6 +32,11 @@ concurrency:
   group: "${{ github.workflow }}-${{ github.event_name }}-${{ inputs.version }}-${{ inputs.deploy-to }}"
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+    working-directory: ./dbt-postgres
+
 jobs:
   release-prep:
     name: "Release prep: generate changelog, bump version"

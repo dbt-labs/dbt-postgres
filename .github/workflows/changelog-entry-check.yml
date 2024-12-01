@@ -12,6 +12,7 @@ on:
 defaults:
     run:
         shell: bash
+        working-directory: ./dbt-postgres
 
 permissions:
     contents: read

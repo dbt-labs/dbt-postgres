@@ -15,6 +15,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ contains(github.event_name, 'pull_request') && github.event.pull_request.head.ref || github.sha }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+    working-directory: ./dbt-postgres
+
 jobs:
   unit:
     name: Unit Tests
@@ -38,4 +43,3 @@ jobs:
 
       - name: Run unit tests
         run: hatch run unit-tests
-        shell: bash

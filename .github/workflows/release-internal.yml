@@ -34,6 +34,7 @@ on:
 defaults:
   run:
     shell: "bash"
+    working-directory: ./dbt-postgres
 
 jobs:
   invoke-reusable-workflow:
