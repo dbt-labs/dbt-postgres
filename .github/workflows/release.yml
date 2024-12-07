@@ -59,15 +59,18 @@ jobs:
         with:
           ref: ${{ needs.release-prep.outputs.release-branch }}
           persist-credentials: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python_version }}
-      - uses: pypa/hatch@install
-      - id: archive
+
+      - name: "Setup `hatch`"
+        uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
+
+      - name: "Set archive name"
+        id: archive
         run: |
           archive_name=${{ github.event.repository.name }}-${{ inputs.version }}-${{ inputs.deploy-to }}
           echo "name=$archive_name" >> $GITHUB_OUTPUT
-      - uses: dbt-labs/dbt-adapters/.github/actions/build-hatch@main
+
+      - name: "Build ${{ github.event.repository.name }}"
+        uses: dbt-labs/dbt-adapters/.github/actions/build-hatch@main
         with:
           archive-name: ${{ steps.archive.outputs.name }}
 
