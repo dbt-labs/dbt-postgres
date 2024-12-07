@@ -73,7 +73,6 @@ concurrency:
 defaults:
   run:
     shell: bash
-    working-directory: ./dbt-postgres
 
 jobs:
   integration:
