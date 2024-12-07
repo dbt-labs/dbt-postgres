@@ -62,6 +62,8 @@ jobs:
 
       - name: "Setup `hatch`"
         uses: dbt-labs/dbt-adapters/.github/actions/setup-hatch@main
+        with:
+          python-version: ${{ inputs.python_version }}
 
       - name: "Set archive name"
         id: archive
