@@ -9,6 +9,14 @@ on:
         -   unlabeled
         -   synchronize
 
+defaults:
+    run:
+        shell: bash
+
+permissions:
+    contents: read
+    pull-requests: write
+
 jobs:
     changelog-entry-check:
         uses: dbt-labs/dbt-adapters/.github/workflows/_changelog-entry-check.yml@monorepo/shared-workflows
