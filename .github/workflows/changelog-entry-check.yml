@@ -2,10 +2,15 @@ name: Changelog entry check
 
 on:
     pull_request:
-        types: [opened, reopened, labeled, unlabeled, synchronize]
+        types:
+        -   opened
+        -   reopened
+        -   labeled
+        -   unlabeled
+        -   synchronize
 
 jobs:
-    changelog-entry:
+    changelog-entry-check:
         uses: dbt-labs/dbt-adapters/.github/workflows/_changelog-entry-check.yml@monorepo/shared-workflows
         with:
             pull-request: ${{ github.event.pull_request.number }}
