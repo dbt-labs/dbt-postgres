@@ -75,7 +75,6 @@ permissions:
 defaults:
   run:
     shell: bash
-    working-directory: ./dbt-postgres
 
 env:
   PYTHON_TARGET_VERSION: 3.12
