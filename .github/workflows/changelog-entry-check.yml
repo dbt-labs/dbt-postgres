@@ -19,7 +19,7 @@ permissions:
 
 jobs:
     changelog-entry-check:
-        uses: dbt-labs/dbt-adapters/.github/workflows/_changelog-entry-check.yml
+        uses: dbt-labs/dbt-adapters/.github/workflows/_changelog-entry-check.yml@main
         with:
             pull-request: ${{ github.event.pull_request.number }}
         secrets: inherit
