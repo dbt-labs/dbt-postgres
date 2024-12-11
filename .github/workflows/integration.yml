@@ -19,6 +19,7 @@
 # to mark the PR as safe to run.
 
 name: Adapter Integration Tests
+
 run-name: "${{ (contains(github.event_name, 'workflow_') && inputs.name) || github.event_name }}: ${{ (contains(github.event_name, 'workflow_') &&  inputs.adapter_branch) || github.ref_name }} by @${{ github.actor }}"
 
 on:
