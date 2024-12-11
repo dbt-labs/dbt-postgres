@@ -53,9 +53,9 @@ path = "dbt/adapters/postgres/__version__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
-    "dbt-adapters @ git+https://github.com/dbt-labs/dbt-adapters.git@amardatar:update-incremental-merge-for-nullable-fields",
+    "dbt-adapters @ git+https://github.com/amardatar/dbt-adapters.git@update-incremental-merge-for-nullable-fields",
     "dbt-common @ git+https://github.com/dbt-labs/dbt-common.git",
-    "dbt-tests-adapter @ git+https://github.com/dbt-labs/dbt-adapters.git@amardatar:update-incremental-merge-for-nullable-fields",#subdirectory=dbt-tests-adapter",
+    "dbt-tests-adapter @ git+https://github.com/amardatar/dbt-adapters.git@update-incremental-merge-for-nullable-fields",#subdirectory=dbt-tests-adapter",
     "dbt-core @ git+https://github.com/dbt-labs/dbt-core.git#subdirectory=core",
     "pre-commit==3.7.0",
     "freezegun",
