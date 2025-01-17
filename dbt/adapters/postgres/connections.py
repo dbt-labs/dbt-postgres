@@ -27,6 +27,7 @@ class PostgresCredentials(Credentials):
     port: Annotated[Port, Minimum(0), Maximum(65535)]
     password: str  # on postgres the password is mandatory
     connect_timeout: int = 10
+    statement_timeout: Optional[int] = None  # Timeout in milliseconds
     role: Optional[str] = None
     search_path: Optional[str] = None
     keepalives_idle: int = 0  # 0 means to use the default value
@@ -64,6 +65,7 @@ class PostgresCredentials(Credentials):
             "sslrootcert",
             "application_name",
             "retries",
+            "statement_timeout",
         )
 
 
@@ -117,6 +119,13 @@ class PostgresConnectionManager(SQLConnectionManager):
         if search_path is not None and search_path != "":
             # see https://postgresql.org/docs/9.5/libpq-connect.html
             kwargs["options"] = "-c search_path={}".format(search_path.replace(" ", "\\ "))
+
+        if credentials.statement_timeout is not None:
+            statement_timeout = f" -c statement_timeout={credentials.statement_timeout}"
+            if kwargs.get("options") is None:
+                kwargs["options"] = statement_timeout.lstrip()
+            else:
+                kwargs["options"] += statement_timeout
 
         if credentials.sslmode:
             kwargs["sslmode"] = credentials.sslmode
