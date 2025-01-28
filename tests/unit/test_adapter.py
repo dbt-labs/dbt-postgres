@@ -308,6 +308,24 @@ class TestPostgresAdapter(TestCase):
             application_name="dbt",
         )
 
+    @mock.patch("dbt.adapters.postgres.connections.psycopg2")
+    def test_set_target_session_attrs(self, psycopg2):
+        self.config.credentials = self.config.credentials.replace(target_session_attrs="any")
+        connection = self.adapter.acquire_connection("dummy")
+
+        psycopg2.connect.assert_not_called()
+        connection.handle
+        psycopg2.connect.assert_called_once_with(
+            dbname="postgres",
+            user="root",
+            host="thishostshouldnotexist",
+            password="password",
+            port=5432,
+            connect_timeout=10,
+            application_name="dbt",
+            target_session_attrs="any",
+        )
+
     @mock.patch.object(PostgresAdapter, "execute_macro")
     @mock.patch.object(PostgresAdapter, "_get_catalog_relations")
     def test_get_catalog_various_schemas(self, mock_get_relations, mock_execute):
