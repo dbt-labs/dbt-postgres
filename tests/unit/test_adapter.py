@@ -121,6 +121,23 @@ class TestPostgresAdapter(TestCase):
         )
 
     @mock.patch("dbt.adapters.postgres.connections.psycopg2")
+    def test_statement_timeout(self, psycopg2):
+        self.config.credentials = self.config.credentials.replace(statement_timeout=5000)
+        connection = self.adapter.acquire_connection("dummy")
+        psycopg2.connect.assert_not_called()
+        _ = connection.handle
+        psycopg2.connect.assert_called_once_with(
+            dbname="postgres",
+            user="root",
+            host="thishostshouldnotexist",
+            password="password",
+            port=5432,
+            connect_timeout=10,
+            application_name="dbt",
+            options="-c statement_timeout=5000",
+        )
+
+    @mock.patch("dbt.adapters.postgres.connections.psycopg2")
     def test_changed_connect_timeout(self, psycopg2):
         self.config.credentials = self.config.credentials.replace(connect_timeout=30)
         connection = self.adapter.acquire_connection("dummy")
