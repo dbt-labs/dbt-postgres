@@ -1,0 +1,6 @@
+kind: Fixes
+body: Optimize slow query that uses a high amount of temporary disk space to find relations
+time: 2025-01-18T08:41:03.022013Z
+custom:
+    Author: michalc
+    Issue: "189"
